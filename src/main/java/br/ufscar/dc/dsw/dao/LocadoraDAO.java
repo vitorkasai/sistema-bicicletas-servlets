@@ -29,7 +29,7 @@ public class LocadoraDAO extends GenericDAO {
                 String email = resultSet.getString("email");
                 String senha = resultSet.getString("senha");
                 String nome = resultSet.getString("nome");
-                boolean administrador = resultSet.getBoolean("administrador");
+                String administrador = resultSet.getString("administrador");
                 String tipoUsuario = resultSet.getString("tipo_usuario");
                 String CNPJ = resultSet.getString("CNPJ");
                 String cidade = resultSet.getString("cidade");
@@ -60,7 +60,7 @@ public class LocadoraDAO extends GenericDAO {
                 String email = resultSet.getString("email");
                 String senha = resultSet.getString("senha");
                 String nome = resultSet.getString("nome");
-                boolean administrador = resultSet.getBoolean("administrador");
+                String administrador = resultSet.getString("administrador");
                 String tipoUsuario = resultSet.getString("tipo_usuario");
                 String CNPJ = resultSet.getString("CNPJ");
                 String cidade = resultSet.getString("cidade");
@@ -91,7 +91,7 @@ public class LocadoraDAO extends GenericDAO {
                 String email = resultSet.getString("email");
                 String senha = resultSet.getString("senha");
                 String nome = resultSet.getString("nome");
-                boolean administrador = resultSet.getBoolean("administrador");
+                String administrador = resultSet.getString("administrador");
                 String tipoUsuario = resultSet.getString("tipo_usuario");
                 String cidade = resultSet.getString("cidade");
                 locadora = new Locadora(id, email, senha, nome, administrador, tipoUsuario, CNPJ, cidade);
@@ -117,7 +117,7 @@ public class LocadoraDAO extends GenericDAO {
             statement.setString(1, usuario.getEmail());
             statement.setString(2, usuario.getSenha());
             statement.setString(3, usuario.getNome());
-            statement.setBoolean(4, usuario.isAdministrador());
+            statement.setString(4, usuario.getAdministrador());
             statement.setString(5, usuario.getTipoUsuario());
             statement.executeUpdate();
 
@@ -165,7 +165,7 @@ public class LocadoraDAO extends GenericDAO {
             statement.setString(1, usuario.getEmail());
             statement.setString(2, usuario.getSenha());
             statement.setString(3, usuario.getNome());
-            statement.setBoolean(4, usuario.isAdministrador());
+            statement.setString(4, usuario.getAdministrador());
             statement.setString(5, usuario.getTipoUsuario());
             statement.executeUpdate();
             

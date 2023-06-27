@@ -6,7 +6,7 @@ CREATE TABLE IF NOT EXISTS usuario (
   email VARCHAR(256) UNIQUE NOT NULL,
   senha VARCHAR(256) NOT NULL,
   nome VARCHAR(110) NOT NULL,
-  administrador TINYINT(1) DEFAULT 0,
+  administrador CHAR(1) DEFAULT "0",
   tipo_usuario CHAR(1) NOT NULL,
   PRIMARY KEY (id)
 );
@@ -35,20 +35,20 @@ CREATE TABLE IF NOT EXISTS locacao (
   dia DATE NOT NULL,
   horario TIME NOT NULL,
   PRIMARY KEY (CNPJ, dia, horario),
-  FOREIGN KEY (CPF) REFERENCES cliente (CPF),
-  FOREIGN KEY (CNPJ) REFERENCES locadora (CNPJ)
+  FOREIGN KEY (CPF) REFERENCES cliente (CPF) ON DELETE CASCADE,
+  FOREIGN KEY (CNPJ) REFERENCES locadora (CNPJ) ON DELETE CASCADE
 );
 
 /* ADMINISTRADORES */
-INSERT INTO usuario (email, senha, nome, administrador, tipo_usuario) VALUES ('admin1@gmail.com', 'admin', 'Leonardo Lopes', 1, 'C');
+INSERT INTO usuario (email, senha, nome, administrador, tipo_usuario) VALUES ('admin1@gmail.com', 'admin', 'Leonardo Lopes', "1", 'C');
 SET @id_usuario = LAST_INSERT_ID();
 INSERT INTO cliente (id_usuario, CPF, telefone, sexo, data_nascimento) VALUES (@id_usuario, '00000000001', '00000000001', 'M', '2000-04-10');
 
-INSERT INTO usuario (email, senha, nome, administrador, tipo_usuario) VALUES ('admin2@gmail.com', 'admin', 'Locadora ADM', 1, 'L');
+INSERT INTO usuario (email, senha, nome, administrador, tipo_usuario) VALUES ('admin2@gmail.com', 'admin', 'Locadora ADM', "1", 'L');
 SET @id_usuario = LAST_INSERT_ID();
 INSERT INTO locadora (id_usuario, CNPJ, cidade) VALUES (@id_usuario, '00000000000001', 'São Carlos');
 
-INSERT INTO usuario (email, senha, nome, administrador, tipo_usuario) VALUES ('admin3@gmail.com', 'admin', 'Vitor Kasai', 1, 'C');
+INSERT INTO usuario (email, senha, nome, administrador, tipo_usuario) VALUES ('admin3@gmail.com', 'admin', 'Vitor Kasai', "1", 'C');
 SET @id_usuario = LAST_INSERT_ID();
 INSERT INTO cliente (id_usuario, CPF, telefone, sexo, data_nascimento) VALUES (@id_usuario, '00000000003', '00000000003', 'M', '2003-10-10');
 

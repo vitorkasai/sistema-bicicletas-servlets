@@ -9,7 +9,7 @@ public class Cliente extends Usuario {
     private String sexo;
     private Date dataNascimento;
 
-    public Cliente(Long id, String email, String senha, String nome, boolean administrador, String tipoUsuario, String CPF, String telefone, String sexo, Date dataNascimento) {
+    public Cliente(Long id, String email, String senha, String nome, String administrador, String tipoUsuario, String CPF, String telefone, String sexo, Date dataNascimento) {
         super(id, email, senha, nome, administrador, tipoUsuario);
         this.setCPF(CPF);
         this.setTelefone(telefone);

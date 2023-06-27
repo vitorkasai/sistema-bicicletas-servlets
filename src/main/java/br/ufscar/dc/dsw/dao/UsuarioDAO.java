@@ -30,7 +30,7 @@ public class UsuarioDAO extends GenericDAO {
                 String email = resultSet.getString("email");
                 String senha = resultSet.getString("senha");
                 String nome = resultSet.getString("nome");
-                boolean administrador = resultSet.getBoolean("administrador");
+                String administrador = resultSet.getString("administrador");
                 String tipoUsuario = resultSet.getString("tipo_usuario");
                 Usuario usuario = new Usuario(id, email, senha, nome, administrador, tipoUsuario);
                 listaUsuarios.add(usuario);
@@ -59,7 +59,35 @@ public class UsuarioDAO extends GenericDAO {
                 String email = resultSet.getString("email");
                 String senha = resultSet.getString("senha");
                 String nome = resultSet.getString("nome");
-                boolean administrador = resultSet.getBoolean("administrador");
+                String administrador = resultSet.getString("administrador");
+                String tipoUsuario = resultSet.getString("tipo_usuario");
+                usuario = new Usuario(id, email, senha, nome, administrador, tipoUsuario);
+            }
+
+            resultSet.close();
+            statement.close();
+            conn.close();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+     return usuario;
+    }
+
+    public Usuario get(String email) {
+        Usuario usuario = null;   
+        String sql = "SELECT * FROM usuario WHERE email = ?;";
+
+        try {
+            Connection conn = this.getConnection();
+            PreparedStatement statement = conn.prepareStatement(sql);
+            
+            statement.setString(1, email);
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                Long id = resultSet.getLong("id");
+                String senha = resultSet.getString("senha");
+                String nome = resultSet.getString("nome");
+                String administrador = resultSet.getString("administrador");
                 String tipoUsuario = resultSet.getString("tipo_usuario");
                 usuario = new Usuario(id, email, senha, nome, administrador, tipoUsuario);
             }
@@ -84,7 +112,7 @@ public class UsuarioDAO extends GenericDAO {
             statement.setString(1, usuario.getEmail());
             statement.setString(2, usuario.getSenha());
             statement.setString(3, usuario.getNome());
-            statement.setBoolean(4, usuario.isAdministrador());
+            statement.setString(4, usuario.getAdministrador());
             statement.setString(5, usuario.getTipoUsuario());
 
             statement.executeUpdate();
@@ -149,7 +177,7 @@ public class UsuarioDAO extends GenericDAO {
             statement.setString(1, usuario.getEmail());
             statement.setString(2, usuario.getSenha());
             statement.setString(3, usuario.getNome());
-            statement.setBoolean(4, usuario.isAdministrador());
+            statement.setString(4, usuario.getAdministrador());
             statement.setString(5, usuario.getTipoUsuario());
             statement.setLong(6, usuario.getId());
             statement.executeUpdate();

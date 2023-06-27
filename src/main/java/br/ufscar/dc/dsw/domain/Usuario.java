@@ -5,11 +5,25 @@ public class Usuario {
     private String email;
     private String senha;
     private String nome;
-    private boolean administrador;
+    private String administrador;
     private String tipoUsuario;
 
-    public Usuario(Long id, String email, String senha, String nome, boolean administrador, String tipoUsuario) {
+    public Usuario(Long id) {
         this.setId(id);
+    }
+
+    public Usuario(Long id, String email, String senha, String nome, String administrador, String tipoUsuario) {
+        super();
+        this.setId(id);
+        this.setEmail(email);
+        this.setSenha(senha);
+        this.setNome(nome);
+        this.setAdministrador(administrador);
+        this.setTipoUsuario(tipoUsuario);
+    }
+
+     public Usuario(String email, String senha, String nome, String administrador, String tipoUsuario) {
+        super();
         this.setEmail(email);
         this.setSenha(senha);
         this.setNome(nome);
@@ -49,11 +63,11 @@ public class Usuario {
         this.nome = nome;
     }
 
-    public boolean isAdministrador() {
+    public String getAdministrador() {
         return administrador;
     }
 
-    public void setAdministrador(boolean administrador) {
+    public void setAdministrador(String administrador) {
         this.administrador = administrador;
     }
 

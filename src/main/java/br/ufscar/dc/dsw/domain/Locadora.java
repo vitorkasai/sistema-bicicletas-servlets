@@ -5,7 +5,7 @@ public class Locadora extends Usuario {
     private String CNPJ;
     private String cidade;
 
-    public Locadora(Long id, String email, String senha, String nome, boolean administrador, String tipoUsuario, String CNPJ, String cidade) {
+    public Locadora(Long id, String email, String senha, String nome, String administrador, String tipoUsuario, String CNPJ, String cidade) {
         super(id, email, senha, nome, administrador, tipoUsuario);
         this.setCNPJ(CNPJ);
         this.setCidade(cidade);
