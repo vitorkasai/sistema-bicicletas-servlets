@@ -48,7 +48,7 @@
 		<td><input type="text" id="telefone" name="telefone" required value="${cliente.telefone}" /></td>
 	</tr>
 	<tr>
-		<td><label for="dataNascimento">CPF</label></td>
+		<td><label for="dataNascimento">dataNascimento</label></td>
 		<td><input type="text" id="dataNascimento" name="dataNascimento" required value="${cliente.dataNascimento}" /></td>
 	</tr>
    	<tr>
