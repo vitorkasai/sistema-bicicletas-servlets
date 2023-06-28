@@ -144,6 +144,7 @@ public class LocadoraController extends HttpServlet {
     }
 
     private void remove(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        System.out.println("id recuperado em LocadoraController: " + request.getParameter("id"));
         Usuario usuario = daoUsuario.get(Long.parseLong(request.getParameter("id")));
         daoUsuario.delete(usuario);
         response.sendRedirect("lista");

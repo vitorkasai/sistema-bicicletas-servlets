@@ -30,6 +30,7 @@ public class ClienteController extends HttpServlet {
     @Override
     public void init() {
         daoCliente = new ClienteDAO();
+        daoUsuario = new UsuarioDAO();
     }
 
     @Override
@@ -151,6 +152,7 @@ public class ClienteController extends HttpServlet {
     }
 
     private void remove(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        System.out.println("id recuperado em ClienteController: " + request.getParameter("id"));
         Usuario usuario = daoUsuario.get(Long.parseLong(request.getParameter("id")));
         daoUsuario.delete(usuario);
         response.sendRedirect("lista");
