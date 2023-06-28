@@ -167,12 +167,15 @@ public class LocadoraDAO extends GenericDAO {
             statement.setString(3, usuario.getNome());
             statement.setString(4, usuario.getAdministrador());
             statement.setString(5, usuario.getTipoUsuario());
+            statement.setLong(6, usuario.getId());
+
             statement.executeUpdate();
-            
-            sql = "UPDATE locadora SET CNPJ = ?, cidade = ?;";
+            System.out.println("CNPJ Locadora: "+ locadora.getCNPJ());
+            sql = "UPDATE locadora SET CNPJ = ?, cidade = ? WHERE id_usuario = ?;";
             statement = conn.prepareStatement(sql);
             statement.setString(1, locadora.getCNPJ());
             statement.setString(2, locadora.getCidade());
+            statement.setLong(3, locadora.getId());
             statement.executeUpdate();
             
             statement.close();

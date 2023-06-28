@@ -23,7 +23,7 @@
    	<tr>
    		<td><label for="email">Email</label></td>
    		<td><input type="text" id="email" name="email" size="45"
-   			required value="${locadora.email}" maxlength="18"/></td>
+   			required value="${locadora.email}" maxlength="256"/></td>
    	</tr>
    	<tr>
    		<td><label for="senha">Senha</label></td>
@@ -37,7 +37,7 @@
 	</tr>
 	<tr>
 		<td><label for="cnpj">CNPJ</label></td>
-		<td><input type="text" id="cnpj" name="CNPJ" size="45" required
+		<td><input type="text" id="cnpj" name="cnpj" size="45" required
 			value="${locadora.CNPJ}" maxlength="256" /></td>
 	</tr>
 	<tr>

@@ -131,7 +131,7 @@ public class UsuarioDAO extends GenericDAO {
                 cliente_statement.executeUpdate();
                 cliente_statement.close();
             }
-            else if (usuario.getTipoUsuario() == "L") {
+            else if (usuario.getTipoUsuario().equals("L")) {
                 Locadora locadora = new LocadoraDAO().get(usuario.getId());
                 sql = "INSERT INTO locadora (id_usuario, CNPJ, cidade) VALUES (?, ?, ?);";
                 PreparedStatement locadora_statement = conn.prepareStatement(sql);

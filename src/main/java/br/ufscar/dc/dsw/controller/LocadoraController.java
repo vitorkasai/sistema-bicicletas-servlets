@@ -134,11 +134,21 @@ public class LocadoraController extends HttpServlet {
         String email = request.getParameter("email");
         String senha = request.getParameter("senha");
         String nome = request.getParameter("nome");
-        Usuario usuario = new Usuario(email, senha, nome, "1", "L");
-        daoUsuario.insert(usuario);
+        Usuario usuario = daoUsuario.get(Long.parseLong(request.getParameter("id")));
+        
+        usuario.setEmail(email);
+        usuario.setSenha(senha);
+        usuario.setNome(nome);
+        
+        daoUsuario.update(usuario);
+
         String cnpj = request.getParameter("cnpj");
         String cidade = request.getParameter("cidade");
-        Locadora locadora = new Locadora(usuario.getId(), email, senha, nome, "1", "L", cnpj, cidade);
+        Locadora locadora = daoLocadora.get(usuario.getId());
+        
+        locadora.setCNPJ(cnpj);
+        locadora.setCidade(cidade);
+
         daoLocadora.update(locadora);
         response.sendRedirect("lista");
     }
