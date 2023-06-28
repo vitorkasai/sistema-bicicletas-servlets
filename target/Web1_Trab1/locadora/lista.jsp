@@ -22,8 +22,8 @@
 	<div align="center">
 		<h1>Gerenciamento de Locadoras</h1>
 		<h2>
-			<a href="/<%=contextPath%>"><fmt:message key="home_page" /></a> &nbsp;&nbsp;&nbsp; <a
-				href="/<%=contextPath%>/locadoras/cadastro"><fmt:message key="add_publisher" /></a>
+			<a href="/<%=contextPath%>">Menu Principal</a> &nbsp;&nbsp;&nbsp; <a
+				href="/<%=contextPath%>/locadoras/cadastro">Adicionar locadora</a>
 		</h2>
 	</div>
 

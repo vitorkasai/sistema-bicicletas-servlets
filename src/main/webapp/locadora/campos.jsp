@@ -5,15 +5,15 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 
 <% System.out.println("PASSEI POR: WEB-INF/locadora/campos.jsp"); %> 
-<fmt:bundle basename="messages">
+
 <table border="1">
 	<caption>
    		<c:choose>
    			<c:when test="${locadora != null}">
-				<fmt:message key="edit" />
+				Edição
                            </c:when>
    			<c:otherwise>
-				<fmt:message key="registration" />
+				Cadastro
                            </c:otherwise>
    		</c:choose>
 	</caption>
@@ -21,17 +21,33 @@
    		<input type="hidden" name="id" value="${locadora.id}" />
    	</c:if>
    	<tr>
-   		<td><label for="cnpj">CNPJ</label></td>
-   		<td><input type="text" id="cnpj" name="cnpj" size="45"
-   			required value="${locadora.CNPJ}" maxlength="18"/></td>
+   		<td><label for="email">Email</label></td>
+   		<td><input type="text" id="email" name="email" size="45"
+   			required value="${locadora.email}" maxlength="18"/></td>
    	</tr>
    	<tr>
-   		<td><label for="nome"><fmt:message key="name" /></label></td>
-   		<td><input type="text" id="nome" name="nome" size="45" required
-   			value="${locadora.nome}" maxlength="256" /></td>
+   		<td><label for="senha">Senha</label></td>
+   		<td><input type="text" id="senha" name="senha" size="45" required
+   			value="${locadora.senha}" maxlength="256" /></td>
    	</tr>
+	<tr>
+		<td><label for="nome">Nome</label></td>
+		<td><input type="text" id="nome" name="nome" size="45" required
+			value="${locadora.nome}" maxlength="256" /></td>
+	</tr>
+	<tr>
+		<td><label for="cnpj">CNPJ</label></td>
+		<td><input type="text" id="cnpj" name="CNPJ" size="45" required
+			value="${locadora.CNPJ}" maxlength="256" /></td>
+	</tr>
+	<tr>
+		<td><label for="cidade">Cidade</label></td>
+		<td><input type="text" id="cidade" name="cidade" size="45" required
+			value="${locadora.cidade}" maxlength="256" /></td>
+	</tr>
    	<tr>
-   		<td colspan="2" align="center"><input type="submit" value=<fmt:message key="save" /> /></td>
+		<!-- Substituir value depois por <fmt:message key="save" /> / -->
+   		<td colspan="2" align="center"><input type="submit" value="Salvar"></td>
    	</tr>
 </table>
-</fmt:bundle>
+

@@ -5,15 +5,15 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 
 <% System.out.println("PASSEI POR: WEB-INF/cliente/campos.jsp"); %> 
-<fmt:bundle basename="messages">
+
 <table border="1">
 	<caption>
    		<c:choose>
    			<c:when test="${cliente != null}">
-				<fmt:message key="edit" />
+				Edição
                            </c:when>
    			<c:otherwise>
-				<fmt:message key="registration" />
+				Cadastro
                            </c:otherwise>
    		</c:choose>
 	</caption>
@@ -21,38 +21,39 @@
    		<input type="hidden" name="id" value="${cliente.id}" />
    	</c:if>
    	<tr>
-   		<td><label for="email"><fmt:message key="title" /></label></td>
+   		<td><label for="email">Email</label></td>
    		<td><input type="text" id="email" name="email" size="45"
    			required value="${cliente.email}" maxlength="256" /></td>
    	</tr>
    	<tr>
-   		<td><label for="senha"><fmt:message key="author" /></label></td>
+   		<td><label for="senha">Senha</label></td>
    		<td><input type="text" id="senha" name="senha" size="45" required
    			value="${cliente.senha}" maxlength="256" /></td>
    	</tr>
-	<!--
-	<tr>
-		<td><label for="nome"><fmt:message key="publisher" /></label></td>
-   		<td><select id="nome" name="nome">
-   				<c:forEach items="${}" var="editora">
-   					<option value="${editora.key}"
-   						${livro.editora.nome==editora.value ? 'selected' : '' }>
-   						${editora.value}</option>
-   				</c:forEach>
-   		</select></td>
-	</tr>
-	-->
- 
+	
    	<tr>
-   		<td><label for="nome"><fmt:message key="year" /></label></td>
+   		<td><label for="nome">Nome</label></td>
    		<td><input type="text" id="nome" name="nome" required value="${cliente.nome}" /></td>
    	</tr>
    	<tr>
-   		<td><label for="CPF"><fmt:message key="price" /></label></td>
+   		<td><label for="CPF">CPF</label></td>
    		<td><input type="text" id="CPF" name="CPF" required value="${cliente.CPF}" /></td>
    	</tr>
+	<tr>
+		<td><label for="sexo">Sexo</label></td>
+		<td><input type="text" id="sexo" name="sexo" required value="${cliente.sexo}" /></td>
+	</tr>
+	<tr>
+		<td><label for="telefone">Telefone</label></td>
+		<td><input type="text" id="telefone" name="telefone" required value="${cliente.telefone}" /></td>
+	</tr>
+	<tr>
+		<td><label for="dataNascimento">CPF</label></td>
+		<td><input type="text" id="dataNascimento" name="dataNascimento" required value="${cliente.dataNascimento}" /></td>
+	</tr>
    	<tr>
-   		<td colspan="2" align="center"><input type="submit" value=<fmt:message key="save" /> /></td>
+		<!-- Substituir o value depois por <fmt:message key="save" /> /> -->
+   		<td colspan="2" align="center"><input type="submit" value="Enviar"></td>
    	</tr>
 </table>
-</fmt:bundle>
+

@@ -5,18 +5,15 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <html>
 <head>
-	<fmt:bundle basename="messages">
-		<title><fmt:message key="v_bookstore" /></title>
-	</fmt:bundle>
+		<title>Gerenciamento de clientes</title>
 </head>
 
 <body>
 	<% System.out.println("PASSEI POR: WEB-INF/cliente/formulario.jsp"); %> 
-	<fmt:bundle basename="messages">
 	<div align="center">
-		<h1><fmt:message key="book_management" /></h1>
+		<h1>Gerenciamento de clientes</h1>
 		<h2>
-			<a href="lista"><fmt:message key="booklist" /></a>
+			<a href="lista">Lista de Clientes</a>
 		</h2>
 	</div>
 	<div align="center">
@@ -40,6 +37,5 @@
 			</c:forEach>
 		</ul>
 	</c:if>
-</fmt:bundle>
 </body>
 </html>

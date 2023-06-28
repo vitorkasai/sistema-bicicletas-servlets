@@ -5,18 +5,15 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <html>
 <head>
-	<fmt:bundle basename="messages">
-		<title><fmt:message key="publisher_management" /></title>
-	</fmt:bundle>
+		<title>Gerenciamento de locadoras</title>
 </head>
 
 <body>
 	<% System.out.println("PASSEI POR: WEB-INF/locadora/formulario.jsp"); %> 
-	<fmt:bundle basename="messages">
 	<div align="center">
-		<h1><fmt:message key="publisher_management" /></h1>
+		<h1>Gerenciamento de locadoras</h1>
 		<h2>
-			<a href="lista"><fmt:message key="publisher_list" /></a>
+			<a href="lista">Lista de locadoras</a>
 		</h2>
 	</div>
 	<div align="center">
@@ -40,6 +37,5 @@
 			</c:forEach>
 		</ul>
 	</c:if>
-</fmt:bundle>
 </body>
 </html>
