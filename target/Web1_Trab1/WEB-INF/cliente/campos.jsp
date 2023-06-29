@@ -37,7 +37,7 @@
    	</tr>
    	<tr>
    		<td><label for="CPF">CPF</label></td>
-   		<td><input type="text" id="CPF" name="CPF" required value="${cliente.CPF}" /></td>
+   		<td><input type="text" id="CPF" name="CPF" required value="${cliente.CPF}" maxlength="11" /></td>
    	</tr>
 	<tr>
 		<td><label for="sexo">Sexo</label></td>
@@ -45,7 +45,7 @@
 	</tr>
 	<tr>
 		<td><label for="telefone">Telefone</label></td>
-		<td><input type="text" id="telefone" name="telefone" required value="${cliente.telefone}" /></td>
+		<td><input type="text" id="telefone" name="telefone" required value="${cliente.telefone}" maxlength="20" /></td>
 	</tr>
 	<tr>
 		<td><label for="dataNascimento">dataNascimento</label></td>

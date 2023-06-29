@@ -38,7 +38,7 @@
 	<tr>
 		<td><label for="cnpj">CNPJ</label></td>
 		<td><input type="text" id="cnpj" name="cnpj" size="45" required
-			value="${locadora.CNPJ}" maxlength="256" /></td>
+			value="${locadora.CNPJ}" maxlength="14" /></td>
 	</tr>
 	<tr>
 		<td><label for="cidade">Cidade</label></td>
