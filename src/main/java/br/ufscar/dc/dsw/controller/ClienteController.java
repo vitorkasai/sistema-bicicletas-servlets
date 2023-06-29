@@ -86,7 +86,7 @@ public class ClienteController extends HttpServlet {
     private void lista(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         List<Cliente> listaClientes = daoCliente.getAll();
         request.setAttribute("listaClientes", listaClientes);
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/cliente/lista.jsp");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/cliente/lista.jsp");
         dispatcher.forward(request, response);
     }
 
@@ -101,7 +101,7 @@ public class ClienteController extends HttpServlet {
     private void apresentaFormCadastro(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         request.setAttribute("locadoras", getLocadoras());
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/cliente/formulario.jsp");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/cliente/formulario.jsp");
         dispatcher.forward(request, response);
     }
 
@@ -111,7 +111,7 @@ public class ClienteController extends HttpServlet {
         Cliente cliente = daoCliente.get(id);
         request.setAttribute("cliente", cliente);
         request.setAttribute("locadoras", getLocadoras());
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/cliente/formulario.jsp");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/cliente/formulario.jsp");
         dispatcher.forward(request, response);
     }
 

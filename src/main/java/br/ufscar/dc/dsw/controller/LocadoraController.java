@@ -81,7 +81,7 @@ public class LocadoraController extends HttpServlet {
     private void lista(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         List<Locadora> listaLocadoras = daoLocadora.getAll();
         request.setAttribute("listaLocadoras", listaLocadoras);
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/locadora/lista.jsp");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/locadora/lista.jsp");
         dispatcher.forward(request, response);
     }
 
@@ -96,7 +96,7 @@ public class LocadoraController extends HttpServlet {
     private void apresentaFormCadastro(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         request.setAttribute("locadoras", getLocadoras());
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/locadora/formulario.jsp");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/locadora/formulario.jsp");
         dispatcher.forward(request, response);
     }
 
@@ -106,7 +106,7 @@ public class LocadoraController extends HttpServlet {
         Locadora locadora = daoLocadora.get(id);
         request.setAttribute("locadora", locadora);
         request.setAttribute("locadoras", getLocadoras());
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/locadora/formulario.jsp");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/locadora/formulario.jsp");
         dispatcher.forward(request, response);
     }
 
