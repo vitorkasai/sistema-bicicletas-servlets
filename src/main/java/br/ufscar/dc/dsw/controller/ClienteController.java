@@ -13,6 +13,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.sql.Date;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -135,18 +138,35 @@ public class ClienteController extends HttpServlet {
     private void atualize(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        String email = request.getParameter("email");
-        String nome = request.getParameter("nome");
-        String senha = request.getParameter("senha");
-        Usuario usuario = new Usuario(email, senha, nome, "1", "C");
-        daoUsuario.insert(usuario);
+        request.setCharacterEncoding("UTF-8");
 
-        String CPF = request.getParameter("CPF");
+        String email = request.getParameter("email");
+        String senha = request.getParameter("senha");
+        String nome = request.getParameter("nome");
+        Usuario usuario = daoUsuario.get(Long.parseLong(request.getParameter("id")));
+        
+        usuario.setEmail(email);
+        usuario.setSenha(senha);
+        usuario.setNome(nome);
+        
+        daoUsuario.update(usuario);
+
+        String cpf = request.getParameter("CPF");
         String telefone = request.getParameter("telefone");
         String sexo = request.getParameter("sexo");
-        Date dataNascimento = Date.valueOf(request.getParameter("data_nascimento"));
-        Cliente cliente = new Cliente(usuario.getId(), email, senha, nome, "1", "C", CPF, telefone, sexo,
-                dataNascimento);
+
+        String data_nao_convertida = request.getParameter("dataNascimento");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        LocalDate localDate = LocalDate.parse(data_nao_convertida, formatter);
+        Date dataNascimento = Date.valueOf(localDate);
+
+        Cliente cliente = daoCliente.get(usuario.getId());
+        
+        cliente.setCPF(cpf);
+        cliente.setTelefone(telefone);
+        cliente.setSexo(sexo);
+        cliente.setDataNascimento(dataNascimento);
+
         daoCliente.update(cliente);
         response.sendRedirect("lista");
     }

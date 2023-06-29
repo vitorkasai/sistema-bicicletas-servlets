@@ -9,7 +9,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import br.ufscar.dc.dsw.domain.Locadora;
-import br.ufscar.dc.dsw.domain.Usuario;
 
 public class LocadoraDAO extends GenericDAO {
 
@@ -108,21 +107,10 @@ public class LocadoraDAO extends GenericDAO {
 
     public void insert(Locadora locadora) {
 
-        String sql = "INSERT INTO usuario (email, senha, nome, administrador, tipo_usuario) VALUES (?, ?, ?, ?, ?);";
-        Usuario usuario =  new UsuarioDAO().get(locadora.getId());
-
         try {
             Connection conn = this.getConnection();
+            String sql = "INSERT INTO locadora (id_usuario, CNPJ, cidade) VALUES (?, ?, ?);";
             PreparedStatement statement = conn.prepareStatement(sql);
-            statement.setString(1, usuario.getEmail());
-            statement.setString(2, usuario.getSenha());
-            statement.setString(3, usuario.getNome());
-            statement.setString(4, usuario.getAdministrador());
-            statement.setString(5, usuario.getTipoUsuario());
-            statement.executeUpdate();
-
-            sql = "INSERT INTO locadora (id_usuario, CNPJ, cidade) VALUES (?, ?, ?);";
-            statement = conn.prepareStatement(sql);
             statement.setLong(1, locadora.getId());
             statement.setString(2, locadora.getCNPJ());
             statement.setString(3, locadora.getCidade());
@@ -135,6 +123,7 @@ public class LocadoraDAO extends GenericDAO {
         }
     }
 
+    /*
     public void delete(Locadora locadora) {
         // Por causa do 'ON DELETE CASCADE' se excluirmos um usuário, a locadora também será excluída
         String sql = "DELETE FROM usuario WHERE id = ?";
@@ -152,27 +141,14 @@ public class LocadoraDAO extends GenericDAO {
             throw new RuntimeException(e);
         }
     }
+    */
 
     public void update(Locadora locadora) {
-
-        String sql = "UPDATE usuario SET email = ?, senha = ?, nome = ?, administrador = ?, tipo_usuario = ? WHERE id = ?;";
-        Usuario usuario =  new UsuarioDAO().get(locadora.getId());
-
+      
         try {
             Connection conn = this.getConnection();
+            String sql = "UPDATE locadora SET CNPJ = ?, cidade = ? WHERE id_usuario = ?;";
             PreparedStatement statement = conn.prepareStatement(sql);
-
-            statement.setString(1, usuario.getEmail());
-            statement.setString(2, usuario.getSenha());
-            statement.setString(3, usuario.getNome());
-            statement.setString(4, usuario.getAdministrador());
-            statement.setString(5, usuario.getTipoUsuario());
-            statement.setLong(6, usuario.getId());
-
-            statement.executeUpdate();
-            System.out.println("CNPJ Locadora: "+ locadora.getCNPJ());
-            sql = "UPDATE locadora SET CNPJ = ?, cidade = ? WHERE id_usuario = ?;";
-            statement = conn.prepareStatement(sql);
             statement.setString(1, locadora.getCNPJ());
             statement.setString(2, locadora.getCidade());
             statement.setLong(3, locadora.getId());

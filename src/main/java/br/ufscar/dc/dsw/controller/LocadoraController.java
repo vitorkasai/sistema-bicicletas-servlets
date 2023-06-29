@@ -112,12 +112,13 @@ public class LocadoraController extends HttpServlet {
 
     private void insere(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
-
+        
         String email = request.getParameter("email");
         String senha = request.getParameter("senha");
         String nome = request.getParameter("nome");
         Usuario usuario = new Usuario(email, senha, nome, "1", "L");
         daoUsuario.insert(usuario);
+        usuario = daoUsuario.get(email);
         String cnpj = request.getParameter("cnpj");
         String cidade = request.getParameter("cidade");
         Locadora locadora = new Locadora(usuario.getId(), email, senha, nome, "1", "L", cnpj, cidade);
@@ -125,7 +126,6 @@ public class LocadoraController extends HttpServlet {
         response.sendRedirect("lista");
     }
 
-    // NÃO FAZ SENTIDO TODA NOVA LOCADORA SER ADMINISTRADOR
     private void atualize(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
@@ -154,7 +154,6 @@ public class LocadoraController extends HttpServlet {
     }
 
     private void remove(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        System.out.println("id recuperado em LocadoraController: " + request.getParameter("id"));
         Usuario usuario = daoUsuario.get(Long.parseLong(request.getParameter("id")));
         daoUsuario.delete(usuario);
         response.sendRedirect("lista");

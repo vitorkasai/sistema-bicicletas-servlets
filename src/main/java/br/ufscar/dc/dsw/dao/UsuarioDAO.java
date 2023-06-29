@@ -117,32 +117,6 @@ public class UsuarioDAO extends GenericDAO {
 
             statement.executeUpdate();
             statement.close();
-            
-            if (usuario.getTipoUsuario().equals("C")) {
-                Cliente cliente = new ClienteDAO().get(usuario.getId());
-
-                sql = "INSERT INTO cliente (id_usuario, CPF, telefone, sexo, data_nascimento) VALUES (?, ?, ?, ?, ?);";
-                PreparedStatement cliente_statement = conn.prepareStatement(sql);
-                cliente_statement.setLong(1, usuario.getId());
-                cliente_statement.setString(2, cliente.getCPF());
-                cliente_statement.setString(3, cliente.getTelefone());
-                cliente_statement.setString(4, cliente.getSexo());
-                cliente_statement.setDate(5, cliente.getDataNascimento());
-                cliente_statement.executeUpdate();
-                cliente_statement.close();
-            }
-            else if (usuario.getTipoUsuario().equals("L")) {
-                Locadora locadora = new LocadoraDAO().get(usuario.getId());
-                sql = "INSERT INTO locadora (id_usuario, CNPJ, cidade) VALUES (?, ?, ?);";
-                PreparedStatement locadora_statement = conn.prepareStatement(sql);
-                locadora_statement.setLong(1, usuario.getId());
-                locadora_statement.setString(2, locadora.getCNPJ());
-                locadora_statement.setString(3, locadora.getCidade());
-
-                locadora_statement.executeUpdate();
-                locadora_statement.close();
-            }
-
             conn.close();
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -166,7 +140,6 @@ public class UsuarioDAO extends GenericDAO {
         }
     }
 
-    // PRECISA ATUALIZAR ATRIBUTOS DE CLIENTE/LOCADORA ??
     public void update(Usuario usuario) {
         String sql = "UPDATE usuario SET email = ?, senha = ?, nome = ?, administrador = ?, tipo_usuario = ? WHERE id = ?;";
 
@@ -182,31 +155,6 @@ public class UsuarioDAO extends GenericDAO {
             statement.setLong(6, usuario.getId());
             statement.executeUpdate();
             statement.close();
-
-            if (usuario.getTipoUsuario().equals("C")) {
-                Cliente cliente = new ClienteDAO().get(usuario.getId());
-
-                sql = "UPDATE cliente SET CPF = ?, telefone = ?, sexo = ?, data_nascimento = ? WHERE id_usuario = ?;";
-                PreparedStatement cliente_statement = conn.prepareStatement(sql);
-                cliente_statement.setString(1, cliente.getCPF());
-                cliente_statement.setString(2, cliente.getTelefone());
-                cliente_statement.setString(3, cliente.getSexo());
-                cliente_statement.setDate(4, cliente.getDataNascimento());
-                cliente_statement.setLong(5, usuario.getId());
-                cliente_statement.executeUpdate();
-                cliente_statement.close();
-            }
-            else if (usuario.getTipoUsuario() == "L") {
-                Locadora locadora = new LocadoraDAO().get(usuario.getId());
-                sql = "UPDATE locadora SET CNPJ = ?, cidade = ? WHERE id_usuario = ?;";
-                PreparedStatement locadora_statement = conn.prepareStatement(sql);
-                locadora_statement.setString(1, locadora.getCNPJ());
-                locadora_statement.setString(2, locadora.getCidade());
-                locadora_statement.setLong(3, usuario.getId());
-
-                locadora_statement.executeUpdate();
-                locadora_statement.close();
-            }
 
             conn.close();
         } catch (SQLException e) {

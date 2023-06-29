@@ -49,7 +49,7 @@
 	</tr>
 	<tr>
 		<td><label for="dataNascimento">dataNascimento</label></td>
-		<td><input type="text" id="dataNascimento" name="dataNascimento" required value="${cliente.dataNascimento}" /></td>
+		<td><input type="date" id="dataNascimento" name="dataNascimento" required value="${cliente.dataNascimento}" /></td>
 	</tr>
    	<tr>
 		<!-- Substituir o value depois por <fmt:message key="save" /> /> -->
