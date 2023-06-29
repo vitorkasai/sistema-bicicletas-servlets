@@ -123,26 +123,6 @@ public class LocadoraDAO extends GenericDAO {
         }
     }
 
-    /*
-    public void delete(Locadora locadora) {
-        // Por causa do 'ON DELETE CASCADE' se excluirmos um usuário, a locadora também será excluída
-        String sql = "DELETE FROM usuario WHERE id = ?";
-
-        try {
-            Connection conn = this.getConnection();
-            PreparedStatement statement = conn.prepareStatement(sql);
-
-            statement.setLong(1, locadora.getId());
-            statement.executeUpdate();
-
-            statement.close();
-            conn.close();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
-    */
-
     public void update(Locadora locadora) {
       
         try {

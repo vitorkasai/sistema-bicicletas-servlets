@@ -9,8 +9,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import br.ufscar.dc.dsw.domain.Usuario;
-import br.ufscar.dc.dsw.domain.Cliente;
-import br.ufscar.dc.dsw.domain.Locadora;
 
 public class UsuarioDAO extends GenericDAO {
 

@@ -12,9 +12,9 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.sql.Date;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -53,7 +53,6 @@ public class ClienteController extends HttpServlet {
             return;
         }
         String action = request.getPathInfo();
-        System.out.println("ACTION -> " + action);
         if (action == null) {
             action = "";
         }
@@ -119,20 +118,30 @@ public class ClienteController extends HttpServlet {
     private void insere(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
 
-        String email = request.getParameter("email");
-        String nome = request.getParameter("nome");
-        String senha = request.getParameter("senha");
-        Usuario usuario = new Usuario(email, senha, nome, "1", "C");
-        daoUsuario.insert(usuario);
+        try {
+            String email = request.getParameter("email");
+            String nome = request.getParameter("nome");
+            String senha = request.getParameter("senha");
+            Usuario usuario = new Usuario(email, senha, nome, "1", "C");
+            daoUsuario.insert(usuario);
 
-        String CPF = request.getParameter("CPF");
-        String telefone = request.getParameter("telefone");
-        String sexo = request.getParameter("sexo");
-        Date dataNascimento = Date.valueOf(request.getParameter("data_nascimento"));
-        Cliente cliente = new Cliente(usuario.getId(), email, senha, nome, "1", "C", CPF, telefone, sexo,
+            String CPF = request.getParameter("CPF");
+            String telefone = request.getParameter("telefone");
+            String sexo = request.getParameter("sexo");
+            SimpleDateFormat reFormat = new SimpleDateFormat("yyyy-MM-dd");
+            java.util.Date data_sem_formatar = reFormat.parse(request.getParameter("dataNascimento"));
+            java.sql.Date dataNascimento = new java.sql.Date(data_sem_formatar.getTime());
+            usuario = daoUsuario.get(email);
+
+            Cliente cliente = new Cliente(usuario.getId(), email, senha, nome, "1", "C", CPF, telefone, sexo,
                 dataNascimento);
-        daoCliente.insert(cliente);
-        response.sendRedirect("lista");
+            daoCliente.insert(cliente);
+            response.sendRedirect("lista");
+
+        }
+        catch (ParseException | RuntimeException | IOException e) {
+            throw new ServletException(e);
+        }
     }
 
     private void atualize(HttpServletRequest request, HttpServletResponse response)
@@ -140,41 +149,50 @@ public class ClienteController extends HttpServlet {
 
         request.setCharacterEncoding("UTF-8");
 
-        String email = request.getParameter("email");
-        String senha = request.getParameter("senha");
-        String nome = request.getParameter("nome");
-        Usuario usuario = daoUsuario.get(Long.parseLong(request.getParameter("id")));
+        try {
+            String email = request.getParameter("email");
+            String senha = request.getParameter("senha");
+            String nome = request.getParameter("nome");
+            Usuario usuario = daoUsuario.get(Long.parseLong(request.getParameter("id")));
+            
+            usuario.setEmail(email);
+            usuario.setSenha(senha);
+            usuario.setNome(nome);
+            
+            daoUsuario.update(usuario);
+
+            String cpf = request.getParameter("CPF");
+            String telefone = request.getParameter("telefone");
+            String sexo = request.getParameter("sexo");
+
+            SimpleDateFormat reFormat = new SimpleDateFormat("yyyy-MM-dd");
+            java.util.Date data_sem_formatar = reFormat.parse(request.getParameter("dataNascimento"));
+            java.sql.Date dataNascimento = new java.sql.Date(data_sem_formatar.getTime());
+            usuario = daoUsuario.get(email);
+            Cliente cliente = daoCliente.get(usuario.getId());
         
-        usuario.setEmail(email);
-        usuario.setSenha(senha);
-        usuario.setNome(nome);
-        
-        daoUsuario.update(usuario);
+            cliente.setCPF(cpf);
+            cliente.setTelefone(telefone);
+            cliente.setSexo(sexo);
+            cliente.setDataNascimento(dataNascimento);
 
-        String cpf = request.getParameter("CPF");
-        String telefone = request.getParameter("telefone");
-        String sexo = request.getParameter("sexo");
-
-        String data_nao_convertida = request.getParameter("dataNascimento");
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-        LocalDate localDate = LocalDate.parse(data_nao_convertida, formatter);
-        Date dataNascimento = Date.valueOf(localDate);
-
-        Cliente cliente = daoCliente.get(usuario.getId());
-        
-        cliente.setCPF(cpf);
-        cliente.setTelefone(telefone);
-        cliente.setSexo(sexo);
-        cliente.setDataNascimento(dataNascimento);
-
-        daoCliente.update(cliente);
-        response.sendRedirect("lista");
+            daoCliente.update(cliente);
+            response.sendRedirect("lista");
+        }
+        catch (ParseException | RuntimeException | IOException e) {
+            throw new ServletException(e);
+        }
     }
 
     private void remove(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        System.out.println("id recuperado em ClienteController: " + request.getParameter("id"));
-        Usuario usuario = daoUsuario.get(Long.parseLong(request.getParameter("id")));
-        daoUsuario.delete(usuario);
-        response.sendRedirect("lista");
+        try {
+            Usuario usuario = daoUsuario.get(Long.parseLong(request.getParameter("id")));
+            daoUsuario.delete(usuario);
+            response.sendRedirect("lista");
+        }
+        catch (RuntimeException | IOException e) {
+            throw new ServletException(e);
+        }
+        
     }
 }

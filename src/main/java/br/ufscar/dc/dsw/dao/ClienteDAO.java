@@ -10,7 +10,6 @@ import java.util.List;
 import java.sql.Date;
 
 import br.ufscar.dc.dsw.domain.Cliente;
-import br.ufscar.dc.dsw.domain.Usuario;
 
 public class ClienteDAO extends GenericDAO {
 
@@ -119,21 +118,11 @@ public class ClienteDAO extends GenericDAO {
 
     public void insert(Cliente cliente) {
 
-        String sql = "INSERT INTO usuario (email, senha, nome, administrador, tipoUsuario) VALUES (?, ?, ?, ?, ?);";
-        Usuario usuario = new UsuarioDAO().get(cliente.getId());
-
         try {
             Connection conn = this.getConnection();
+          
+            String sql = "INSERT INTO cliente (id_usuario, CPF, telefone, sexo, data_nascimento) VALUES (?, ?, ?, ?, ?);";
             PreparedStatement statement = conn.prepareStatement(sql);
-            statement.setString(1, usuario.getEmail());
-            statement.setString(2, usuario.getSenha());
-            statement.setString(3, usuario.getNome());
-            statement.setString(4, usuario.getAdministrador());
-            statement.setString(5, usuario.getTipoUsuario());
-            statement.executeUpdate();
-
-            sql = "INSERT INTO cliente (id_usuario, CPF, telefone, sexo, data_nascimento) VALUES (?, ?, ?, ?, ?);";
-            statement = conn.prepareStatement(sql);
             statement.setLong(1, cliente.getId());
             statement.setString(2, cliente.getCPF());
             statement.setString(3, cliente.getTelefone());
@@ -169,26 +158,16 @@ public class ClienteDAO extends GenericDAO {
 
     public void update(Cliente cliente) {
 
-        String sql = "UPDATE usuario SET email = ?, senha = ?, nome = ?, administrador = ?, tipoUsuario = ? WHERE id = ?;";
-        Usuario usuario = new UsuarioDAO().get(cliente.getId());
-
         try {
             Connection conn = this.getConnection();
+
+            String sql = "UPDATE cliente SET CPF = ?, telefone = ?, sexo = ?, data_nascimento = ? WHERE id_usuario = ?;";
             PreparedStatement statement = conn.prepareStatement(sql);
-
-            statement.setString(1, usuario.getEmail());
-            statement.setString(2, usuario.getSenha());
-            statement.setString(3, usuario.getNome());
-            statement.setString(4, usuario.getAdministrador());
-            statement.setString(5, usuario.getTipoUsuario());
-            statement.executeUpdate();
-
-            sql = "UPDATE cliente SET CPF = ?, telefone = ?, sexo = ?, data_nascimento = ?;";
-            statement = conn.prepareStatement(sql);
             statement.setString(1, cliente.getCPF());
             statement.setString(2, cliente.getTelefone());
             statement.setString(3, cliente.getSexo());
             statement.setDate(4, cliente.getDataNascimento());
+            statement.setLong(5, cliente.getId());
             statement.executeUpdate();
 
             statement.close();
