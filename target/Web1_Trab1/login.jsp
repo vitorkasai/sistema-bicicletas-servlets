@@ -39,5 +39,32 @@
                 </tr>
             </table>
         </form>
+		<div align="center">
+		<table border="1">
+			<caption>Lista de Locadoras</caption>
+			<tr>
+				<th>ID</th>
+				<th>Email</th>
+				<th>Senha</th>
+				<th>Nome</th>
+				<th>CNPJ</th>
+				<th>Cidade</th>
+			</tr>
+			<c:forEach var="locadora" items="${requestScope.listaLocadoras}">
+				<tr>
+					<td>${locadora.id}</td>
+					<td>${locadora.email}</td>
+					<td>${locadora.senha}</td>
+					<td>${locadora.nome}</td>
+					<td>${locadora.CNPJ}</td>
+					<td>${locadora.cidade}</td>
+								
+				</tr>
+			</c:forEach>
+		</table>
+	</div>
+
+
+
     </body>
 </html>

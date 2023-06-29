@@ -10,6 +10,10 @@ import javax.servlet.http.HttpServletResponse;
 import br.ufscar.dc.dsw.dao.UsuarioDAO;
 import br.ufscar.dc.dsw.domain.Usuario;
 import br.ufscar.dc.dsw.util.Erro;
+import br.ufscar.dc.dsw.domain.Locadora;
+import br.ufscar.dc.dsw.dao.LocadoraDAO;
+import java.util.List;
+
 
 @WebServlet(name = "Index", urlPatterns = { "/index.jsp", "/logout.jsp" })
 public class IndexController extends HttpServlet {
@@ -52,8 +56,13 @@ public class IndexController extends HttpServlet {
 					erros.add("Usuário não encontrado!");
 				}
 			}
-		}
+		}	
 		request.getSession().invalidate();
+
+		List<Locadora> listaLocadoras = new LocadoraDAO().getAll();
+    request.setAttribute("listaLocadoras", listaLocadoras);
+
+
 		request.setAttribute("mensagens", erros);
 		String URL = "/login.jsp";
 		RequestDispatcher rd = request.getRequestDispatcher(URL);
