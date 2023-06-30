@@ -181,7 +181,6 @@ public class ClienteController extends HttpServlet {
             java.util.Date data_sem_formatar = reFormat.parse(request.getParameter("dataNascimento"));
             java.sql.Date dataNascimento = new java.sql.Date(data_sem_formatar.getTime());
 
-            usuario = daoUsuario.get(email);
             Cliente cliente = daoCliente.get(usuario.getId());
 
             cliente.setCPF(cpf);

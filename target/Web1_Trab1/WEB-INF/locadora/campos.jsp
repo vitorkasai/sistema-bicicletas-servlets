@@ -48,7 +48,7 @@
 	<tr>
 		<td>
 			<c:choose>
-				<c:when test="${cliente.administrador == '1'}">
+				<c:when test="${locadora.administrador == '1'}">
 					<input type="checkbox" name="administrador" id="administrador" value="1" checked>
 					<label for="administrador">Administrador</label>
 				</c:when>

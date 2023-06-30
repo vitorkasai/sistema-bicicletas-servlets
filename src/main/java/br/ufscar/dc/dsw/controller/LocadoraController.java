@@ -158,7 +158,6 @@ public class LocadoraController extends HttpServlet {
             usuario.setSenha(senha);
             usuario.setNome(nome);
             usuario.setAdministrador(administrador);
-
             daoUsuario.update(usuario);
 
             String cnpj = request.getParameter("cnpj");
