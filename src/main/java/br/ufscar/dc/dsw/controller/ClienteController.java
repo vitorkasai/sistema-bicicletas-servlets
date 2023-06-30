@@ -122,7 +122,13 @@ public class ClienteController extends HttpServlet {
             String email = request.getParameter("email");
             String nome = request.getParameter("nome");
             String senha = request.getParameter("senha");
-            Usuario usuario = new Usuario(email, senha, nome, "1", "C");
+
+            String administrador = request.getParameter("administrador");
+            if (administrador == null) {
+                administrador = "0";
+            }
+
+            Usuario usuario = new Usuario(email, senha, nome, administrador, "C");
             daoUsuario.insert(usuario);
 
             String CPF = request.getParameter("CPF");
@@ -133,13 +139,13 @@ public class ClienteController extends HttpServlet {
             java.sql.Date dataNascimento = new java.sql.Date(data_sem_formatar.getTime());
             usuario = daoUsuario.get(email);
 
-            Cliente cliente = new Cliente(usuario.getId(), email, senha, nome, "1", "C", CPF, telefone, sexo,
-                dataNascimento);
+            Cliente cliente = new Cliente(usuario.getId(), email, senha, nome, administrador, "C", CPF, telefone, sexo,
+                    dataNascimento);
+
             daoCliente.insert(cliente);
             response.sendRedirect("lista");
 
-        }
-        catch (ParseException | RuntimeException | IOException e) {
+        } catch (ParseException | RuntimeException | IOException e) {
             throw new ServletException(e);
         }
     }
@@ -153,12 +159,18 @@ public class ClienteController extends HttpServlet {
             String email = request.getParameter("email");
             String senha = request.getParameter("senha");
             String nome = request.getParameter("nome");
+
+            String administrador = request.getParameter("administrador");
+            if (administrador == null) {
+                administrador = "0";
+            }
+
             Usuario usuario = daoUsuario.get(Long.parseLong(request.getParameter("id")));
-            
+
             usuario.setEmail(email);
             usuario.setSenha(senha);
             usuario.setNome(nome);
-            
+            usuario.setAdministrador(administrador);
             daoUsuario.update(usuario);
 
             String cpf = request.getParameter("CPF");
@@ -168,9 +180,10 @@ public class ClienteController extends HttpServlet {
             SimpleDateFormat reFormat = new SimpleDateFormat("yyyy-MM-dd");
             java.util.Date data_sem_formatar = reFormat.parse(request.getParameter("dataNascimento"));
             java.sql.Date dataNascimento = new java.sql.Date(data_sem_formatar.getTime());
+
             usuario = daoUsuario.get(email);
             Cliente cliente = daoCliente.get(usuario.getId());
-        
+
             cliente.setCPF(cpf);
             cliente.setTelefone(telefone);
             cliente.setSexo(sexo);
@@ -178,8 +191,7 @@ public class ClienteController extends HttpServlet {
 
             daoCliente.update(cliente);
             response.sendRedirect("lista");
-        }
-        catch (ParseException | RuntimeException | IOException e) {
+        } catch (ParseException | RuntimeException | IOException e) {
             throw new ServletException(e);
         }
     }
@@ -189,10 +201,9 @@ public class ClienteController extends HttpServlet {
             Usuario usuario = daoUsuario.get(Long.parseLong(request.getParameter("id")));
             daoUsuario.delete(usuario);
             response.sendRedirect("lista");
-        }
-        catch (RuntimeException | IOException e) {
+        } catch (RuntimeException | IOException e) {
             throw new ServletException(e);
         }
-        
+
     }
 }

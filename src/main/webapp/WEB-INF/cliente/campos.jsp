@@ -22,7 +22,7 @@
    	</c:if>
    	<tr>
    		<td><label for="email">Email</label></td>
-   		<td><input type="text" id="email" name="email" size="45"
+   		<td><input type="email" id="email" name="email" size="45"
    			required value="${cliente.email}" maxlength="256" /></td>
    	</tr>
    	<tr>
@@ -40,17 +40,58 @@
    		<td><input type="text" id="CPF" name="CPF" required value="${cliente.CPF}" maxlength="11" /></td>
    	</tr>
 	<tr>
+		
+		<td> <label for="sexoContainer">Sexo</label></td>
+		<td>
+			<div id="sexoContainer" style="display: flex;">
+				<c:choose>
+					<c:when test="${cliente.sexo == 'F'}">
+						<input type="radio" id="masculino" name="sexo" value="M">
+						<label for="masculino">Masculino</label><br>
+						<input type="radio" id="feminino" name="sexo" value="F" required checked>
+						<label for="feminino">Feminino</label><br>
+					</c:when>
+					<c:otherwise>
+						<input type="radio" id="masculino" name="sexo" value="M" required checked>
+						<label for="masculino">Masculino</label><br>
+						<input type="radio" id="feminino" name="sexo" value="F">
+						<label for="feminino">Feminino</label><br>
+					</c:otherwise>
+				</c:choose>
+			</div>
+		</td>
+		
+		
+		<!--
 		<td><label for="sexo">Sexo</label></td>
 		<td><input type="text" id="sexo" name="sexo" required value="${cliente.sexo}" /></td>
+		-->
 	</tr>
 	<tr>
 		<td><label for="telefone">Telefone</label></td>
-		<td><input type="text" id="telefone" name="telefone" required value="${cliente.telefone}" maxlength="20" /></td>
+		<td><input type="tel" id="telefone" name="telefone" required value="${cliente.telefone}" maxlength="20" /></td>
 	</tr>
 	<tr>
-		<td><label for="dataNascimento">dataNascimento</label></td>
+		<td><label for="dataNascimento">Data de nascimento</label></td>
 		<td><input type="date" id="dataNascimento" name="dataNascimento" required value="${cliente.dataNascimento}" /></td>
 	</tr>
+
+	<tr>
+		<td>
+			<c:choose>
+				<c:when test="${cliente.administrador == '1'}">
+					<input type="checkbox" name="administrador" id="administrador" value="1" checked>
+					<label for="administrador">Administrador</label>
+				</c:when>
+				<c:otherwise>
+					<input type="checkbox" name="administrador" id="administrador" value="1">
+					<label for="administrador">Administrador</label>
+				</c:otherwise>
+			</c:choose>		
+		</td>
+	</tr>
+
+
    	<tr>
 		<!-- Substituir o value depois por <fmt:message key="save" /> /> -->
    		<td colspan="2" align="center"><input type="submit" value="Enviar"></td>

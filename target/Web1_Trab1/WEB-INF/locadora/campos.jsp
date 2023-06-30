@@ -22,7 +22,7 @@
    	</c:if>
    	<tr>
    		<td><label for="email">Email</label></td>
-   		<td><input type="text" id="email" name="email" size="45"
+   		<td><input type="email" id="email" name="email" size="45"
    			required value="${locadora.email}" maxlength="256"/></td>
    	</tr>
    	<tr>
@@ -44,6 +44,20 @@
 		<td><label for="cidade">Cidade</label></td>
 		<td><input type="text" id="cidade" name="cidade" size="45" required
 			value="${locadora.cidade}" maxlength="256" /></td>
+	</tr>
+	<tr>
+		<td>
+			<c:choose>
+				<c:when test="${cliente.administrador == '1'}">
+					<input type="checkbox" name="administrador" id="administrador" value="1" checked>
+					<label for="administrador">Administrador</label>
+				</c:when>
+				<c:otherwise>
+					<input type="checkbox" name="administrador" id="administrador" value="1">
+					<label for="administrador">Administrador</label>
+				</c:otherwise>
+			</c:choose>		
+		</td>
 	</tr>
    	<tr>
 		<!-- Substituir value depois por <fmt:message key="save" /> / -->
