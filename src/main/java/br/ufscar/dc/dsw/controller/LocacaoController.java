@@ -2,28 +2,23 @@ package br.ufscar.dc.dsw.controller;
 
 import br.ufscar.dc.dsw.dao.LocadoraDAO;
 import br.ufscar.dc.dsw.dao.ClienteDAO;
-import br.ufscar.dc.dsw.dao.UsuarioDAO;
 import br.ufscar.dc.dsw.dao.LocacaoDAO;
-
 import br.ufscar.dc.dsw.domain.Locadora;
-import br.ufscar.dc.dsw.domain.Cliente;
 import br.ufscar.dc.dsw.domain.Usuario;
 import br.ufscar.dc.dsw.domain.Locacao;
-
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-
+import java.util.HashMap;
+import java.util.Map;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.sql.Time;
+
 
 @WebServlet(urlPatterns = { "/locacoes/*" })
 public class LocacaoController extends HttpServlet {
@@ -31,13 +26,13 @@ public class LocacaoController extends HttpServlet {
 
     private static final long serialVersionUID = 1L;
     private ClienteDAO daoCliente;
-    private UsuarioDAO daoUsuario;
+    private LocadoraDAO daoLocadora;
     private LocacaoDAO daoLocacao;
 
     @Override
     public void init() {
         daoCliente = new ClienteDAO();
-        daoUsuario = new UsuarioDAO();
+        daoLocadora = new LocadoraDAO();
         daoLocacao = new LocacaoDAO();
     }
 
@@ -51,22 +46,31 @@ public class LocacaoController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         System.out.println("PASSEI POR: LocacaoController");
-        System.out.println("ACTION -> " + request.getPathInfo());
+        
+        Usuario usuario = (Usuario) request.getSession().getAttribute("usuarioLogado");
+
+        if (usuario == null || usuario.getTipoUsuario().equals("L")){
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/admin");
+            dispatcher.forward(request, response);
+            return;
+        }
         String action = request.getPathInfo();
+        System.out.println("ACTION -> " + request.getPathInfo());
         if (action == null) {
             action = "";
         }
 
         try {
+
             switch (action) {
                 case "/cadastro":
                     apresentaFormCadastro(request, response);
                     break;
-                /*
-                 * case "/insercao":
-                 * insere(request, response);
-                 * break;
-                 */
+                
+                case "/insercao":
+                    insere(request, response);
+                    break;
+                
                 default:
                     lista(request, response);
                     break;
@@ -98,45 +102,27 @@ public class LocacaoController extends HttpServlet {
         RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/locacao/formulario.jsp");
         dispatcher.forward(request, response);
     }
+    private void insere(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        request.setCharacterEncoding("UTF-8");
 
-    /*
-     * private void insere(HttpServletRequest request, HttpServletResponse response)
-     * throws ServletException, IOException {
-     * request.setCharacterEncoding("UTF-8");
-     * 
-     * try {
-     * String email = request.getParameter("email");
-     * String nome = request.getParameter("nome");
-     * String senha = request.getParameter("senha");
-     * 
-     * String administrador = request.getParameter("administrador");
-     * if (administrador == null) {
-     * administrador = "0";
-     * }
-     * 
-     * Usuario usuario = new Usuario(email, senha, nome, administrador, "C");
-     * daoUsuario.insert(usuario);
-     * 
-     * String CPF = request.getParameter("CPF");
-     * String telefone = request.getParameter("telefone");
-     * String sexo = request.getParameter("sexo");
-     * SimpleDateFormat reFormat = new SimpleDateFormat("yyyy-MM-dd");
-     * java.util.Date data_sem_formatar =
-     * reFormat.parse(request.getParameter("dataNascimento"));
-     * java.sql.Date dataNascimento = new
-     * java.sql.Date(data_sem_formatar.getTime());
-     * usuario = daoUsuario.get(email);
-     * 
-     * Cliente cliente = new Cliente(usuario.getId(), email, senha, nome,
-     * administrador, "C", CPF, telefone, sexo,
-     * dataNascimento);
-     * 
-     * daoCliente.insert(cliente);
-     * response.sendRedirect("lista");
-     * 
-     * } catch (ParseException | RuntimeException | IOException e) {
-     * throw new ServletException(e);
-     * }
-     * }
-     */
+        try {
+
+            SimpleDateFormat reFormat = new SimpleDateFormat("yyyy-MM-dd");
+            java.util.Date data_sem_formatar = reFormat.parse(request.getParameter("dataLocacao"));
+            java.sql.Date dataLocacao = new java.sql.Date(data_sem_formatar.getTime());
+
+            String horarioString = request.getParameter("horario");
+            SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm");
+            java.util.Date horario_sem_formatar = timeFormat.parse(horarioString);
+            java.sql.Time horario = new java.sql.Time(horario_sem_formatar.getTime());
+            
+            Locacao locacao = new Locacao(CPF, cnpj, dataLocacao, horario);
+
+            daoLocacao.insert(locacao);
+            response.sendRedirect("lista");
+
+        } catch (ParseException | RuntimeException | IOException e) {
+            throw new ServletException(e);
+        }
+    }
 }

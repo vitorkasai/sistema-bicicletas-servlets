@@ -32,7 +32,7 @@ public class LocacaoDAO extends GenericDAO {
                 Date dia = resultSet.getDate("dia");
                 Time horario = resultSet.getTime("horario");
                 Locacao locacao = new Locacao(new ClienteDAO().get(CPF), new LocadoraDAO().get(CNPJ), dia, horario);
-                listaLocacoes.add(locacao);
+                listaLocacoes.add(locacao); 
             }
 
             resultSet.close();

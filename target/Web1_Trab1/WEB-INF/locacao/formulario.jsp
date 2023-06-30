@@ -35,12 +35,12 @@
                         <td><label for="dataLocacao">Data</label></td>
                         <td><input type="date" id="dataLocacao" name="dataLocacao" required value="${locacao.dia}" /></td>
                     </tr>
-                    <!--
+                    
                     <tr>
                         <td><label for="hora">Hora</label></td>
                         <td><input type="time" id="horario" name="horario" step="3600" required /></td>
                     </tr>
-                    -->
+                    
                     <tr>
                         <!-- Substituir o value depois por <fmt:message key="save" /> /> -->
                         <td colspan="2" align="center"><input type="submit" value="Enviar"></td>

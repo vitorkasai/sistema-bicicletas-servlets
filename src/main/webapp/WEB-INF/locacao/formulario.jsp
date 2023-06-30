@@ -23,24 +23,21 @@
                 <table border="1">
                     <caption>Cadastro</caption>
                     <tr>
-                        <td><label for="CPF">CPF</label></td>
-                        <td><input type="text" id="CPF" name="CPF" required value="${cliente.CPF}" maxlength="11" /></td>
-                    </tr>
-                    <tr>
-                        <td><label for="cnpj">CNPJ</label></td>
-                        <td><input type="text" id="cnpj" name="cnpj" size="45" required
-                            value="${locadora.CNPJ}" maxlength="14" /></td>
+                        <td>
+                            <label for="">locadoras</label>
+                            <select name="" id=""></select>
+                        </td>
                     </tr>
                     <tr>
                         <td><label for="dataLocacao">Data</label></td>
                         <td><input type="date" id="dataLocacao" name="dataLocacao" required value="${locacao.dia}" /></td>
                     </tr>
-                    <!--
+                    
                     <tr>
                         <td><label for="hora">Hora</label></td>
                         <td><input type="time" id="horario" name="horario" step="3600" required /></td>
                     </tr>
-                    -->
+                    
                     <tr>
                         <!-- Substituir o value depois por <fmt:message key="save" /> /> -->
                         <td colspan="2" align="center"><input type="submit" value="Enviar"></td>
