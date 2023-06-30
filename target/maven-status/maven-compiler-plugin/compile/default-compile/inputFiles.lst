@@ -1,5 +1,6 @@
 /home/leonardo/Web1_Geral/DSW1-AA1/src/main/java/br/ufscar/dc/dsw/dao/GenericDAO.java
 /home/leonardo/Web1_Geral/DSW1-AA1/src/main/java/br/ufscar/dc/dsw/domain/Locacao.java
+/home/leonardo/Web1_Geral/DSW1-AA1/src/main/java/br/ufscar/dc/dsw/controller/LocacaoController.java
 /home/leonardo/Web1_Geral/DSW1-AA1/src/main/java/br/ufscar/dc/dsw/controller/LocadoraController.java
 /home/leonardo/Web1_Geral/DSW1-AA1/src/main/java/br/ufscar/dc/dsw/controller/IndexController.java
 /home/leonardo/Web1_Geral/DSW1-AA1/src/main/java/br/ufscar/dc/dsw/controller/AdminController.java
