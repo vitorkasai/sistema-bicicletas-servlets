@@ -7,6 +7,7 @@ import br.ufscar.dc.dsw.domain.Usuario;
 import br.ufscar.dc.dsw.domain.Locadora;
 
 import java.io.IOException;
+import java.text.ParseException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -79,8 +80,8 @@ public class LocadoraController extends HttpServlet {
     }
 
     private void lista(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        List<Locadora> listaLocadoras = daoLocadora.getAll();
-        request.setAttribute("listaLocadoras", listaLocadoras);
+        // List<Locadora> listaLocadoras = daoLocadora.getAll();
+        // request.setAttribute("listaLocadoras", listaLocadoras);
         RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/locadora/lista.jsp");
         dispatcher.forward(request, response);
     }
@@ -112,24 +113,28 @@ public class LocadoraController extends HttpServlet {
 
     private void insere(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
-        
-        String email = request.getParameter("email");
-        String senha = request.getParameter("senha");
-        String nome = request.getParameter("nome");
 
-        String administrador = request.getParameter("administrador");
-        if (administrador == null) {
-            administrador = "0";
+        try {
+            String email = request.getParameter("email");
+            String senha = request.getParameter("senha");
+            String nome = request.getParameter("nome");
+
+            String administrador = request.getParameter("administrador");
+            if (administrador == null) {
+                administrador = "0";
+            }
+
+            Usuario usuario = new Usuario(email, senha, nome, administrador, "L");
+            daoUsuario.insert(usuario);
+            usuario = daoUsuario.get(email);
+            String cnpj = request.getParameter("cnpj");
+            String cidade = request.getParameter("cidade");
+            Locadora locadora = new Locadora(usuario.getId(), email, senha, nome, administrador, "L", cnpj, cidade);
+            daoLocadora.insert(locadora);
+            response.sendRedirect("lista");
+        } catch (RuntimeException | IOException e) {
+            throw new ServletException(e);
         }
-
-        Usuario usuario = new Usuario(email, senha, nome, administrador, "L");
-        daoUsuario.insert(usuario);
-        usuario = daoUsuario.get(email);
-        String cnpj = request.getParameter("cnpj");
-        String cidade = request.getParameter("cidade");
-        Locadora locadora = new Locadora(usuario.getId(), email, senha, nome, administrador, "L", cnpj, cidade);
-        daoLocadora.insert(locadora);
-        response.sendRedirect("lista");
     }
 
     private void atualize(HttpServletRequest request, HttpServletResponse response)
@@ -137,38 +142,46 @@ public class LocadoraController extends HttpServlet {
 
         request.setCharacterEncoding("UTF-8");
 
-        String email = request.getParameter("email");
-        String senha = request.getParameter("senha");
-        String nome = request.getParameter("nome");
-        
-        String administrador = request.getParameter("administrador");
-        if (administrador == null) {
-            administrador = "0";
+        try {
+            String email = request.getParameter("email");
+            String senha = request.getParameter("senha");
+            String nome = request.getParameter("nome");
+
+            String administrador = request.getParameter("administrador");
+            if (administrador == null) {
+                administrador = "0";
+            }
+
+            Usuario usuario = daoUsuario.get(Long.parseLong(request.getParameter("id")));
+
+            usuario.setEmail(email);
+            usuario.setSenha(senha);
+            usuario.setNome(nome);
+            usuario.setAdministrador(administrador);
+
+            daoUsuario.update(usuario);
+
+            String cnpj = request.getParameter("cnpj");
+            String cidade = request.getParameter("cidade");
+            Locadora locadora = daoLocadora.get(usuario.getId());
+
+            locadora.setCNPJ(cnpj);
+            locadora.setCidade(cidade);
+
+            daoLocadora.update(locadora);
+            response.sendRedirect("lista");
+        } catch (RuntimeException | IOException e) {
+            throw new ServletException(e);
         }
-
-        Usuario usuario = daoUsuario.get(Long.parseLong(request.getParameter("id")));
-        
-        usuario.setEmail(email);
-        usuario.setSenha(senha);
-        usuario.setNome(nome);
-        usuario.setAdministrador(administrador);
-        
-        daoUsuario.update(usuario);
-
-        String cnpj = request.getParameter("cnpj");
-        String cidade = request.getParameter("cidade");
-        Locadora locadora = daoLocadora.get(usuario.getId());
-        
-        locadora.setCNPJ(cnpj);
-        locadora.setCidade(cidade);
-
-        daoLocadora.update(locadora);
-        response.sendRedirect("lista");
     }
 
     private void remove(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        Usuario usuario = daoUsuario.get(Long.parseLong(request.getParameter("id")));
-        daoUsuario.delete(usuario);
-        response.sendRedirect("lista");
+        try {
+            Usuario usuario = daoUsuario.get(Long.parseLong(request.getParameter("id")));
+            daoUsuario.delete(usuario);
+            response.sendRedirect("lista");
+        } catch (RuntimeException | IOException e) {
+            throw new ServletException(e);
+        }
     }
 }

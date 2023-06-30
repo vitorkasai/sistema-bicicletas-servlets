@@ -11,10 +11,10 @@
    		<c:choose>
    			<c:when test="${locadora != null}">
 				Edição
-                           </c:when>
+            </c:when>
    			<c:otherwise>
 				Cadastro
-                           </c:otherwise>
+            </c:otherwise>
    		</c:choose>
 	</caption>
  	<c:if test="${locadora != null}">

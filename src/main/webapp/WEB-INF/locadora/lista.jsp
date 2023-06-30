@@ -39,7 +39,7 @@
 				<th>Cidade</th>
 				<th>Ações</th>
 			</tr>
-			<c:forEach var="locadora" items="${requestScope.listaLocadoras}">
+			<c:forEach var="locadora" items="${sessionScope.listaLocadoras}">
 				<tr>
 					<td>${locadora.id}</td>
 					<td>${locadora.email}</td>

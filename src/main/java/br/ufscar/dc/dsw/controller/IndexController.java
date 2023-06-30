@@ -60,7 +60,7 @@ public class IndexController extends HttpServlet {
 		request.getSession().invalidate();
 
 		List<Locadora> listaLocadoras = new LocadoraDAO().getAll();
-    request.setAttribute("listaLocadoras", listaLocadoras);
+    	request.getSession().setAttribute("listaLocadoras", listaLocadoras);
 
 
 		request.setAttribute("mensagens", erros);

@@ -39,32 +39,52 @@
                 </tr>
             </table>
         </form>
-		<div align="center">
-		<table border="1">
-			<caption>Lista de Locadoras</caption>
-			<tr>
-				<th>ID</th>
-				<th>Email</th>
-				<th>Senha</th>
-				<th>Nome</th>
-				<th>CNPJ</th>
-				<th>Cidade</th>
-			</tr>
-			<c:forEach var="locadora" items="${requestScope.listaLocadoras}">
-				<tr>
-					<td>${locadora.id}</td>
-					<td>${locadora.email}</td>
-					<td>${locadora.senha}</td>
-					<td>${locadora.nome}</td>
-					<td>${locadora.CNPJ}</td>
-					<td>${locadora.cidade}</td>
-								
-				</tr>
-			</c:forEach>
-		</table>
-	</div>
+        <label for="selectCidade">Cidade: </label>
+        <select name="selectCidade" id="selectCidade">
+            <option value="vazio" selected style="background-color: gray;">Selecione uma cidade</option>
+            <option value="São Carlos">São Carlos</option>
+            <option value="Lins">Lins</option>
+            <option value="Ribeirão Preto">Ribeirão Preto</option>
+            <option value="São Paulo">São Paulo</option>
+            <option value="Araras">Araras</option>
+            <option value="Sorocaba">Sorocaba</option>
+        </select>
 
-
-
+        <div id="locadorasTableContainer" align="center">
+            <table id="locadorasTable" border="1">
+                <caption>Lista de Locadoras</caption>
+                <tr>
+                    <th>Nome</th>
+                    <th>Cidade</th>
+                </tr>
+                <!-- Popule a tabela com todas as locadoras inicialmente -->
+                <c:forEach var="locadora" items="${sessionScope.listaLocadoras}">
+                    <tr>
+                        <td>${locadora.nome}</td>
+                        <td>${locadora.cidade}</td>
+                    </tr>
+                </c:forEach>
+            </table>
+        </div>
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                var selectCidade = document.getElementById('selectCidade');
+                
+                selectCidade.addEventListener('change', function() {
+                    var cidadeSelecionada = selectCidade.value;
+                    var xhr = new XMLHttpRequest();
+                    
+                    xhr.onreadystatechange = function() {
+                        if (xhr.readyState === 4 && xhr.status === 200) {
+                            var locadorasTableContainer = document.getElementById('locadorasTableContainer');
+                            locadorasTableContainer.innerHTML = xhr.responseText;
+                        }
+                    };
+                    
+                    xhr.open('GET', 'filtrarLocadoras.jsp?cidadeSelecionada=' + cidadeSelecionada, true);
+                    xhr.send();
+                });
+            });
+        </script>
     </body>
 </html>
