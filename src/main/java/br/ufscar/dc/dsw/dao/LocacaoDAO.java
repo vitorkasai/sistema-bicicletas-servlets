@@ -16,7 +16,7 @@ import br.ufscar.dc.dsw.domain.Locacao;
 public class LocacaoDAO extends GenericDAO {
 
     public List<Locacao> getAll() {
-
+        System.out.println("Passei por LocacaoDAO.java");
         List<Locacao> listaLocacoes = new ArrayList<>();
         // Retorna todas as colunas de locadora e também aqueles dados vindos da classe pai Usuario
         String sql = "SELECT * FROM locacao;";
@@ -24,7 +24,7 @@ public class LocacaoDAO extends GenericDAO {
         try {
             Connection conn = this.getConnection();
             Statement statement = conn.createStatement();
-
+;
             ResultSet resultSet = statement.executeQuery(sql);
             while (resultSet.next()) {
                 String CPF = resultSet.getString("CPF");

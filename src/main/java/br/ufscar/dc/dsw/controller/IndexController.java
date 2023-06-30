@@ -11,8 +11,11 @@ import br.ufscar.dc.dsw.dao.UsuarioDAO;
 import br.ufscar.dc.dsw.domain.Usuario;
 import br.ufscar.dc.dsw.util.Erro;
 import br.ufscar.dc.dsw.domain.Locadora;
+import br.ufscar.dc.dsw.domain.Locacao;
 import br.ufscar.dc.dsw.dao.LocadoraDAO;
+import br.ufscar.dc.dsw.dao.LocacaoDAO;
 import java.util.List;
+
 
 
 @WebServlet(name = "Index", urlPatterns = { "/index.jsp", "/logout.jsp" })
@@ -61,6 +64,9 @@ public class IndexController extends HttpServlet {
 
 		List<Locadora> listaLocadoras = new LocadoraDAO().getAll();
     	request.getSession().setAttribute("listaLocadoras", listaLocadoras);
+
+		List<Locacao> listaLocacoes = new LocacaoDAO().getAll();
+        request.getSession().setAttribute("listaLocacoes", listaLocacoes);
 
 
 		request.setAttribute("mensagens", erros);

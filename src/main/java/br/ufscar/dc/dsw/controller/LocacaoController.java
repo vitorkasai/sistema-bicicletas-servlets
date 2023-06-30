@@ -76,9 +76,10 @@ public class LocacaoController extends HttpServlet {
         }
     }
 
+    
     private void lista(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        List<Locacao> listaLocacoes = daoLocacao.getAll();
-        request.setAttribute("listaLocacoes", listaLocacoes);
+        //List<Locacao> listaLocacoes = daoLocacao.getAll();
+        //request.getSession().setAttribute("listaLocacoes", listaLocacoes);
         RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/usuario/index.jsp");
         dispatcher.forward(request, response);
     }

@@ -80,8 +80,7 @@ public class LocadoraController extends HttpServlet {
     }
 
     private void lista(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        // List<Locadora> listaLocadoras = daoLocadora.getAll();
-        // request.setAttribute("listaLocadoras", listaLocadoras);
+        request.getSession().setAttribute("listaLocadoras", daoLocadora.getAll());
         RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/locadora/lista.jsp");
         dispatcher.forward(request, response);
     }
