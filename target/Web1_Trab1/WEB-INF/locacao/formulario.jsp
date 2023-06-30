@@ -3,7 +3,7 @@
 <%@ page isELIgnored="false"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
-<%@ page import="java.sql.Time" %>
+
 
 <html>
     <head>
@@ -19,17 +19,20 @@
             </h2>
         </div>
         <div align="center">
-            <form action="insercao" method="post">
+            <form action="insercao" method="post" id="formulario">
                 <table border="1">
                     <caption>Cadastro</caption>
                     <tr>
-                        <td><label for="CPF">CPF</label></td>
-                        <td><input type="text" id="CPF" name="CPF" required value="${cliente.CPF}" maxlength="11" /></td>
-                    </tr>
-                    <tr>
-                        <td><label for="cnpj">CNPJ</label></td>
-                        <td><input type="text" id="cnpj" name="cnpj" size="45" required
-                            value="${locadora.CNPJ}" maxlength="14" /></td>
+                        <td><label for="locadora">Locadora:</label></td>
+                        <td>
+                            <c:set var="listaLocadoras" value="${sessionScope.listaLocadoras}" />
+                            <select id="locadoraSelect" name="locadoraId" required>
+                                <option value="" selected disabled>Selecione uma locadora</option>
+                                <c:forEach items="${listaLocadoras}" var="locadora">
+                                    <option value="${locadora.id}">${locadora.nome}</option>
+                                </c:forEach>
+                            </select>
+                        </td>
                     </tr>
                     <tr>
                         <td><label for="dataLocacao">Data</label></td>
@@ -56,5 +59,19 @@
                 </c:forEach>
             </ul>
         </c:if>
+
+        <script>
+          document.getElementById('locadoraSelect').addEventListener('change', function() {
+            var locadoraSelect = document.getElementById('locadoraSelect');
+            
+            // Remover a opção "Escolha uma locadora" quando uma opção válida for selecionada
+            if (locadoraSelect.value !== '') {
+              var escolhaOption = document.querySelector('#locadoraSelect option[value=""]');
+              escolhaOption.disabled = true;
+              escolhaOption.style.display = 'none';
+            }
+          });
+        </script>
+        
     </body>
 </html>

@@ -7,9 +7,7 @@ import br.ufscar.dc.dsw.domain.Usuario;
 import br.ufscar.dc.dsw.domain.Locadora;
 
 import java.io.IOException;
-import java.text.ParseException;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;

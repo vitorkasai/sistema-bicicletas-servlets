@@ -17,12 +17,10 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.sql.Time;
 
 
 @WebServlet(urlPatterns = { "/locacoes/*" })
 public class LocacaoController extends HttpServlet {
-    
 
     private static final long serialVersionUID = 1L;
     private ClienteDAO daoCliente;
@@ -46,10 +44,10 @@ public class LocacaoController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         System.out.println("PASSEI POR: LocacaoController");
-        
+
         Usuario usuario = (Usuario) request.getSession().getAttribute("usuarioLogado");
 
-        if (usuario == null || usuario.getTipoUsuario().equals("L")){
+        if (usuario == null || usuario.getTipoUsuario().equals("L")) {
             RequestDispatcher dispatcher = request.getRequestDispatcher("/admin");
             dispatcher.forward(request, response);
             return;
@@ -66,11 +64,11 @@ public class LocacaoController extends HttpServlet {
                 case "/cadastro":
                     apresentaFormCadastro(request, response);
                     break;
-                
+
                 case "/insercao":
                     insere(request, response);
                     break;
-                
+
                 default:
                     lista(request, response);
                     break;
@@ -80,11 +78,11 @@ public class LocacaoController extends HttpServlet {
         }
     }
 
-    
     private void lista(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        //List<Locacao> listaLocacoes = daoLocacao.getAll();
-        //request.getSession().setAttribute("listaLocacoes", listaLocacoes);
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/usuario/index.jsp");
+        // List<Locacao> listaLocacoes = daoLocacao.getAll();
+        // request.getSession().setAttribute("listaLocacoes", listaLocacoes);
+        request.getSession().setAttribute("listaLocacoes", daoLocacao.getAll());
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/logado/usuario/index.jsp");
         dispatcher.forward(request, response);
     }
 
@@ -102,6 +100,7 @@ public class LocacaoController extends HttpServlet {
         RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/locacao/formulario.jsp");
         dispatcher.forward(request, response);
     }
+
     private void insere(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
 
@@ -116,7 +115,10 @@ public class LocacaoController extends HttpServlet {
             java.util.Date horario_sem_formatar = timeFormat.parse(horarioString);
             java.sql.Time horario = new java.sql.Time(horario_sem_formatar.getTime());
             
-            Locacao locacao = new Locacao(CPF, cnpj, dataLocacao, horario);
+            Locadora locadora = daoLocadora.get(Long.parseLong(request.getParameter("locadoraId")));
+            Usuario usuario = (Usuario) request.getSession().getAttribute("usuarioLogado");
+            Locacao locacao = new Locacao(daoCliente.get(usuario.getId()), locadora,
+                    dataLocacao, horario);
 
             daoLocacao.insert(locacao);
             response.sendRedirect("lista");
