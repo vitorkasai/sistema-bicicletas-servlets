@@ -42,8 +42,10 @@
 	</tr>
 	<tr>
 		<td><label for="cidade">Cidade</label></td>
-		<td><input type="text" id="cidade" name="cidade" size="45" required
-			value="${locadora.cidade}" maxlength="256" /></td>
+		<td>
+			<select id="cidade" name="cidade" required>
+			</select>
+		</td>
 	</tr>
 	<tr>
 		<td>
@@ -59,6 +61,28 @@
 			</c:choose>		
 		</td>
 	</tr>
+	<script>
+		window.addEventListener('DOMContentLoaded', function() {
+			loadCidades();
+		});
+	
+		function loadCidades() {
+			var cidadeSelect = document.getElementById('cidade');
+			var xhr = new XMLHttpRequest();
+			xhr.open('GET', '${pageContext.request.contextPath}/documentos/cidades.txt', true); // Substitua 'cidades.txt' pelo caminho correto do seu arquivo .txt de cidades
+			xhr.onreadystatechange = function() {
+				if (xhr.readyState === 4 && xhr.status === 200) {
+					var cidades = xhr.responseText.split('\n');
+					for (var i = 0; i < cidades.length; i++) {
+						var option = document.createElement('option');
+						option.text = cidades[i];
+						cidadeSelect.add(option);
+					}
+				}
+			};
+			xhr.send();
+		}
+	</script>
    	<tr>
 		<!-- Substituir value depois por <fmt:message key="save" /> / -->
    		<td colspan="2" align="center"><input type="submit" value="Salvar"></td>

@@ -141,12 +141,6 @@
 <label for="selectCidade">Cidade: </label>
 <select name="selectCidade" id="selectCidade">
     <option value="vazio" selected style="background-color: gray;">Selecione uma cidade</option>
-    <option value="São Carlos">São Carlos</option>
-    <option value="Lins">Lins</option>
-    <option value="Ribeirão Preto">Ribeirão Preto</option>
-    <option value="São Paulo">São Paulo</option>
-    <option value="Araras">Araras</option>
-    <option value="Sorocaba">Sorocaba</option>
 </select>
 
 <div id="locadorasTableContainer">
@@ -167,6 +161,8 @@
 </div>
 <script>
     document.addEventListener('DOMContentLoaded', function () {
+            loadCidades();
+
         var selectCidade = document.getElementById('selectCidade');
 
         selectCidade.addEventListener('change', function () {
@@ -184,6 +180,23 @@
             xhr.send();
         });
     });
+
+    function loadCidades() {
+        var cidadeSelect = document.getElementById('selectCidade');
+        var xhr = new XMLHttpRequest();
+        xhr.open('GET', '${pageContext.request.contextPath}/documentos/cidades.txt', true); // Substitua 'cidades.txt' pelo caminho correto do seu arquivo .txt de cidades
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState === 4 && xhr.status === 200) {
+                var cidades = xhr.responseText.split('\n');
+                for (var i = 0; i < cidades.length; i++) {
+                    var option = document.createElement('option');
+                    option.text = cidades[i];
+                    cidadeSelect.add(option);
+                }
+            }
+        };
+        xhr.send();
+    }
 </script>
 </body>
 </html>
