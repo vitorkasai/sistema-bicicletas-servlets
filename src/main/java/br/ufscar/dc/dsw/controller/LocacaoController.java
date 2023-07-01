@@ -96,7 +96,7 @@ public class LocacaoController extends HttpServlet {
 
     private void apresentaFormCadastro(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        request.setAttribute("locadoras", getLocadoras());
+        request.getSession().setAttribute("locadoras", getLocadoras());
         RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/locacao/formulario.jsp");
         dispatcher.forward(request, response);
     }

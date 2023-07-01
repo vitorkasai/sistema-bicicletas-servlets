@@ -1,16 +1,13 @@
 package br.ufscar.dc.dsw.controller;
 
 import br.ufscar.dc.dsw.dao.LocadoraDAO;
-import br.ufscar.dc.dsw.dao.ClienteDAO;
-import br.ufscar.dc.dsw.dao.LocacaoDAO;
+import br.ufscar.dc.dsw.dao.UsuarioDAO;
 import br.ufscar.dc.dsw.domain.Locadora;
 import br.ufscar.dc.dsw.domain.Usuario;
-import br.ufscar.dc.dsw.domain.Locacao;
 import java.io.IOException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.Map;
+
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -21,15 +18,15 @@ import javax.servlet.http.HttpServletResponse;
 
 @WebServlet(urlPatterns = { "/registrar-locadora/*" })
 public class CadastroLocadoraController extends HttpServlet {
-    /*
+    
     private static final long serialVersionUID = 1L;
-    private ClienteDAO daoCliente;
     private LocadoraDAO daoLocadora;
+    private UsuarioDAO daoUsuario;
 
     @Override
     public void init() {
-        daoCliente = new ClienteDAO();
         daoLocadora = new LocadoraDAO();
+        daoUsuario = new UsuarioDAO();
     }
 
     @Override
@@ -69,10 +66,18 @@ public class CadastroLocadoraController extends HttpServlet {
         }
     }
 
+    private Map<Long, String> getLocadoras() {
+        Map<Long, String> locadoras = new HashMap<>();
+        for (Locadora locadora : daoLocadora.getAll()) {
+            locadoras.put(locadora.getId(), locadora.getNome());
+        }
+        return locadoras;
+    }
+
     private void apresentaFormCadastro(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        request.setAttribute("locadoras", getLocadoras());
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/locacao/formulario.jsp");
+        request.getSession().setAttribute("locadoras", getLocadoras());
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/cadastroUsuario/locadora/formulario.jsp");
         dispatcher.forward(request, response);
     }
 
@@ -80,39 +85,22 @@ public class CadastroLocadoraController extends HttpServlet {
         request.setCharacterEncoding("UTF-8");
 
         try {
+            String email = request.getParameter("email");
+            String senha = request.getParameter("senha");
+            String nome = request.getParameter("nome");
 
-            SimpleDateFormat reFormat = new SimpleDateFormat("yyyy-MM-dd");
-            java.util.Date data_sem_formatar = reFormat.parse(request.getParameter("dataLocacao"));
-            java.sql.Date dataLocacao = new java.sql.Date(data_sem_formatar.getTime());
-
-            String horarioString = request.getParameter("horario");
-            SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm");
-            java.util.Date horario_sem_formatar = timeFormat.parse(horarioString);
-            java.sql.Time horario = new java.sql.Time(horario_sem_formatar.getTime());
+            Usuario usuario = new Usuario(email, senha, nome, "0", "L");
+            daoUsuario.insert(usuario);
+            usuario = daoUsuario.get(email);
             
-            Locadora locadora = daoLocadora.get(Long.parseLong(request.getParameter("locadoraId")));
-            Usuario usuario = (Usuario) request.getSession().getAttribute("usuarioLogado");
-            Locacao locacao = new Locacao(daoCliente.get(usuario.getId()), locadora,
-                    dataLocacao, horario);
-            
-            if (!daoLocacao.existeLocacao(locadora.getCidade(), dataLocacao, horario)) {
-                daoLocacao.insert(locacao);
-                request.setAttribute("erroLocacao", "");
-                request.setAttribute("locadoraParaEmail", locadora);
-                RequestDispatcher dispatcher = request.getRequestDispatcher("/SendEmail");
-                dispatcher.forward(request, response);
-                // response.sendRedirect("lista");
-            }
-            else {
-                request.setAttribute("erroLocacao", "Horário indisponível");
-                //apresentaFormCadastro(request, response);
-                RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/locacao/formulario.jsp");
-                dispatcher.forward(request, response);
-            }
-            
-        } catch (ParseException | RuntimeException | IOException e) {
+            String cnpj = request.getParameter("cnpj");
+            String cidade = request.getParameter("cidade");
+            Locadora locadora = new Locadora(usuario.getId(), email, senha, nome, "0", "L", cnpj, cidade);
+            daoLocadora.insert(locadora);
+            response.sendRedirect(request.getContextPath() + "/login.jsp");
+        } catch (RuntimeException | IOException e) {
             throw new ServletException(e);
         }
     }
-    */
+    
 }

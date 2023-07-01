@@ -100,7 +100,7 @@ public class ClienteController extends HttpServlet {
 
     private void apresentaFormCadastro(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        request.setAttribute("locadoras", getLocadoras());
+        request.getSession().setAttribute("locadoras", getLocadoras());
         RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/cliente/formulario.jsp");
         dispatcher.forward(request, response);
     }
@@ -110,7 +110,7 @@ public class ClienteController extends HttpServlet {
         Long id = Long.parseLong(request.getParameter("id"));
         Cliente cliente = daoCliente.get(id);
         request.setAttribute("cliente", cliente);
-        request.setAttribute("locadoras", getLocadoras());
+        request.getSession().setAttribute("locadoras", getLocadoras());
         RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/cliente/formulario.jsp");
         dispatcher.forward(request, response);
     }
