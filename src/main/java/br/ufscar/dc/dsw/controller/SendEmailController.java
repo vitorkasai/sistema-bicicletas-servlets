@@ -28,7 +28,8 @@ public class SendEmailController extends HttpServlet {
         String host = "smtp.gmail.com";
         String porta = "587";
         final String username = "webt2853@gmail.com";
-        final String senha = "hveihbqvvdiuvpsd";
+        //final String senha = "hveihbqvvdiuvpsd"; //LEO
+        final String senha = "oibczfxsbybujfdi"; //KASAI
 
         // Propriedades do servidor de email
         Properties propriedades = new Properties();
