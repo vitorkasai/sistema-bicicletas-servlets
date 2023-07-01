@@ -119,13 +119,23 @@ public class LocacaoController extends HttpServlet {
             Usuario usuario = (Usuario) request.getSession().getAttribute("usuarioLogado");
             Locacao locacao = new Locacao(daoCliente.get(usuario.getId()), locadora,
                     dataLocacao, horario);
-
-            daoLocacao.insert(locacao);
-             
-            request.setAttribute("locadoraParaEmail", locadora);
-            RequestDispatcher dispatcher = request.getRequestDispatcher("/SendEmail");
-            dispatcher.forward(request, response);
-            // response.sendRedirect("lista");
+            
+            if (!daoLocacao.existeLocacao(locadora.getCidade(), dataLocacao, horario)) {
+                daoLocacao.insert(locacao);
+                request.setAttribute("erroLocacao", "");
+                request.setAttribute("locadoraParaEmail", locadora);
+                RequestDispatcher dispatcher = request.getRequestDispatcher("/SendEmail");
+                dispatcher.forward(request, response);
+                // response.sendRedirect("lista");
+            }
+            else {
+                System.out.println("ERRO LOCAÇÃO: " + request.getAttribute("erroLocacao"));
+                request.setAttribute("erroLocacao", "Horário indisponível");
+                //apresentaFormCadastro(request, response);
+                RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/locacao/formulario.jsp");
+                dispatcher.forward(request, response);
+            }
+            
         } catch (ParseException | RuntimeException | IOException e) {
             throw new ServletException(e);
         }

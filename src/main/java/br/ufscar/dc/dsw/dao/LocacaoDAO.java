@@ -16,7 +16,6 @@ import br.ufscar.dc.dsw.domain.Locacao;
 public class LocacaoDAO extends GenericDAO {
 
     public List<Locacao> getAll() {
-        System.out.println("Passei por LocacaoDAO.java");
         List<Locacao> listaLocacoes = new ArrayList<>();
         // Retorna todas as colunas de locadora e também aqueles dados vindos da classe pai Usuario
         String sql = "SELECT * FROM locacao;";
@@ -69,6 +68,32 @@ public class LocacaoDAO extends GenericDAO {
             throw new RuntimeException(e);
         }
      return locacao;
+    }
+
+     public boolean existeLocacao(String cidade, Date dia, Time horario) {  
+        String sql = "SELECT l.* FROM locacao l JOIN locadora lo ON l.CNPJ = lo.CNPJ WHERE lo.cidade = ? AND l.dia = ? AND l.horario = ?;";
+
+        try {
+            Connection conn = this.getConnection();
+            PreparedStatement statement = conn.prepareStatement(sql);
+            
+            statement.setString(1, cidade);
+            statement.setDate(2, dia);
+            statement.setTime(3, horario);
+
+            ResultSet resultSet = statement.executeQuery();
+            boolean existe = false;
+            if (resultSet.next()) {
+                existe = true;
+            }
+
+            resultSet.close();
+            statement.close();
+            conn.close();
+            return existe;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public void insert(Locacao locacao) {

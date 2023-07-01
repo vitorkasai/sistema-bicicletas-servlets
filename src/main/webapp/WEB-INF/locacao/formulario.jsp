@@ -8,14 +8,24 @@
 <html>
     <head>
         <title>Gerenciamento de locações de um cliente</title>
+        <style>
+            .horarioUsado {
+                border: 1px solid red;
+            }
+            
+            .horarioUsado::after {
+                content: "Horário indisponível!"
+            }
+        </style>
+        
     </head>
 
     <body>
         <% System.out.println("PASSEI POR: WEB-INF/locacao/formulario.jsp"); %> 
         <div align="center">
-            <h1>Gerenciamento de clientes</h1>
+            <h1>Nova locação</h1>
             <h2>
-                <a href="lista">Lista de Clientes</a>
+                <a href="lista">Minha lista de Locações</a>
             </h2>
         </div>
         <div align="center">
@@ -40,8 +50,21 @@
                     </tr>
                     
                     <tr>
-                        <td><label for="hora">Hora</label></td>
-                        <td><input type="time" id="horario" name="horario" step="3600" required /></td>
+                        ${erroLocacao}
+                        <% System.out.println("Novamente aqui na hora"); %>
+                        <c:choose>
+                            <c:when test="${erroLocacao != 'Horário indisponível'}">
+                                <td><label for="hora">Hora</label></td>
+                                <td><input type="time" id="horario" name="horario" step="3600" required /></td>
+                                <c:set var="erroLocacao" value="" scope="request" />
+                            </c:when>
+                            <c:otherwise>
+                                <td><label for="hora">Hora</label></td>
+                                <td><input type="time" id="horario" class="horarioUsado" name="horario" step="3600" required /></td>
+                            </c:otherwise>
+                        </c:choose>
+                        
+                        
                     </tr>
                     
                     <tr>
@@ -61,6 +84,11 @@
         </c:if>
 
         <script>
+            // Armazena os valores dos campos em variáveis
+            var locadoraSelectValue = document.getElementById('locadoraSelect').value;
+            var dataLocacaoValue = document.getElementById('dataLocacao').value;
+            var horarioValue = document.getElementById('horario').value;
+          // Verifica se eu já escolhi uma locadora para retirar a opção inválida  
           document.getElementById('locadoraSelect').addEventListener('change', function() {
             var locadoraSelect = document.getElementById('locadoraSelect');
             
@@ -70,6 +98,13 @@
               escolhaOption.style.display = 'none';
             }
           });
+            // Recoloca os valores nos campos do formulário após submissão mal sucedida
+            document.addEventListener('DOMContentLoaded', function() {
+                document.getElementById('locadoraSelect').value = locadoraSelectValue;
+                document.getElementById('dataLocacao').value = dataLocacaoValue;
+                document.getElementById('horario').value = horarioValue;
+            });
+
         </script>
         
     </body>
