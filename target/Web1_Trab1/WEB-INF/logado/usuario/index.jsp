@@ -26,7 +26,7 @@
                                 <th>Data</th>
                                 <th>Horario</th>
                             </tr>
-                            <!-- Popule a tabela com as locações do cliente logado -->
+                            <!-- Tabela com as locações do cliente logado -->
                             <c:forEach var="locacao" items="${sessionScope.listaLocacoes}">
                                 <c:if test="${locacao.cliente.email == sessionScope.usuarioLogado.email}">
                                     <tr>
@@ -54,14 +54,14 @@
                                 <th>Data</th>
                                 <th>Horario</th>
                             </tr>
-                            <!-- Popule aqui a tabela com as locações da locadora logada -->
+                            <!-- Tabela com as locações da locadora logada -->
                             <c:forEach var="locacao" items="${sessionScope.listaLocacoes}">
                                 <c:if test="${locacao.locadora.email == sessionScope.usuarioLogado.email}">
                                     <tr>
                                         <td>${locacao.locadora.nome}</td>
                                         <td>${locacao.locadora.cidade}</td>
                                         <td>${locacao.dia}</td>
-                                        <td>${locacao.horario}</td>
+                                        <td>${locacao.horario}</td> 
                                     </tr>
                                 </c:if>
                             </c:forEach>
