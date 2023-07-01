@@ -87,20 +87,13 @@ public class CadastroClienteController extends HttpServlet {
             SimpleDateFormat reFormat = new SimpleDateFormat("yyyy-MM-dd");
             java.util.Date data_sem_formatar = reFormat.parse(request.getParameter("dataNascimento"));
             java.sql.Date dataNascimento = new java.sql.Date(data_sem_formatar.getTime());
-
+            usuario = daoUsuario.get(email);
             Cliente cliente = new Cliente(usuario.getId(), email, senha, nome, "0", "C", CPF, telefone, sexo,
                     dataNascimento);
 
             daoCliente.insert(cliente);
-
-            response.setContentType("text/javascript");
-            // Criar o código JavaScript para exibir o popup
-            String mensagem = "Cadastro realizado com sucesso!";
-            String javascriptCode = "alert('" + mensagem + "');";
-
-            // Escrever o código JavaScript na resposta
-            response.getWriter().write(javascriptCode);
-            response.sendRedirect("login.jsp");
+            
+            response.sendRedirect(request.getContextPath() + "/login.jsp");
 
         } catch (ParseException | RuntimeException | IOException e) {
             throw new ServletException(e);

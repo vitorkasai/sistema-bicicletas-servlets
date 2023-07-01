@@ -14,7 +14,7 @@
 		<h1>Cadastro cliente</h1>
 	</div>
 	<div align="center">
-		<form action="/registrar-cliente/insercao" method="post">
+		<form action="${pageContext.request.contextPath}/registrar-cliente/insercao" method="post">
 			<%@include file="campos.jsp"%>
 		</form>
 	</div>
