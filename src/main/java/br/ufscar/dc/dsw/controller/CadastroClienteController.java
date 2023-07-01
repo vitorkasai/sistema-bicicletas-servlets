@@ -14,7 +14,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-
 @WebServlet(urlPatterns = { "/registrar-cliente/*" })
 public class CadastroClienteController extends HttpServlet {
 
@@ -43,22 +42,22 @@ public class CadastroClienteController extends HttpServlet {
         if (action == null) {
             action = "";
         }
-    
+
         try {
 
-                switch (action) {
-                    case "/cadastro":
-                        apresentaFormCadastro(request, response);
-                        break;
+            switch (action) {
+                case "/cadastro":
+                    apresentaFormCadastro(request, response);
+                    break;
 
-                    case "/insercao":
-                        insere(request, response);
-                        break;
+                case "/insercao":
+                    insere(request, response);
+                    break;
 
-                    default:
-                        apresentaFormCadastro(request, response);
-                        break;
-                }
+                default:
+                    apresentaFormCadastro(request, response);
+                    break;
+            }
         } catch (RuntimeException | IOException | ServletException e) {
             throw new ServletException(e);
         }
@@ -92,8 +91,8 @@ public class CadastroClienteController extends HttpServlet {
                     dataNascimento);
 
             daoCliente.insert(cliente);
-            
-            response.sendRedirect(request.getContextPath() + "/login.jsp");
+
+            response.sendRedirect(request.getContextPath() + "/index.jsp");
 
         } catch (ParseException | RuntimeException | IOException e) {
             throw new ServletException(e);

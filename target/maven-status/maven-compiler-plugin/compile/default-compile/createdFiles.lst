@@ -9,10 +9,10 @@ br/ufscar/dc/dsw/domain/Locadora.class
 br/ufscar/dc/dsw/controller/IndexController.class
 br/ufscar/dc/dsw/dao/GenericDAO.class
 br/ufscar/dc/dsw/controller/UsuarioController.class
-br/ufscar/dc/dsw/controller/CadastroLocadoraController.class
 br/ufscar/dc/dsw/controller/LocacaoController.class
-br/ufscar/dc/dsw/domain/Cliente.class
+br/ufscar/dc/dsw/controller/CadastroLocadoraController.class
 br/ufscar/dc/dsw/dao/ClienteDAO.class
+br/ufscar/dc/dsw/domain/Cliente.class
 br/ufscar/dc/dsw/controller/SendEmailController.class
 br/ufscar/dc/dsw/controller/LocadoraController.class
 br/ufscar/dc/dsw/controller/SendEmailController$2.class

@@ -7,8 +7,6 @@ import br.ufscar.dc.dsw.domain.Usuario;
 import br.ufscar.dc.dsw.domain.Locadora;
 
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -83,17 +81,10 @@ public class LocadoraController extends HttpServlet {
         dispatcher.forward(request, response);
     }
 
-    private Map<Long, String> getLocadoras() {
-        Map<Long, String> locadoras = new HashMap<>();
-        for (Locadora locadora : daoLocadora.getAll()) {
-            locadoras.put(locadora.getId(), locadora.getNome());
-        }
-        return locadoras;
-    }
 
     private void apresentaFormCadastro(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        request.getSession().setAttribute("locadoras", getLocadoras());
+        request.getSession().setAttribute("listaLocadoras", new LocadoraDAO().getAll());
         RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/locadora/formulario.jsp");
         dispatcher.forward(request, response);
     }
@@ -103,7 +94,7 @@ public class LocadoraController extends HttpServlet {
         Long id = Long.parseLong(request.getParameter("id"));
         Locadora locadora = daoLocadora.get(id);
         request.setAttribute("locadora", locadora);
-        request.getSession().setAttribute("locadoras", getLocadoras());
+        request.getSession().setAttribute("listaLocadoras",  new LocadoraDAO().getAll());
         RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/locadora/formulario.jsp");
         dispatcher.forward(request, response);
     }

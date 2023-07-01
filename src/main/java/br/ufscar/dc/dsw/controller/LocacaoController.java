@@ -9,8 +9,6 @@ import br.ufscar.dc.dsw.domain.Locacao;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.HashMap;
-import java.util.Map;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -86,17 +84,10 @@ public class LocacaoController extends HttpServlet {
         dispatcher.forward(request, response);
     }
 
-    private Map<Long, String> getLocadoras() {
-        Map<Long, String> locadoras = new HashMap<>();
-        for (Locadora locadora : new LocadoraDAO().getAll()) {
-            locadoras.put(locadora.getId(), locadora.getNome());
-        }
-        return locadoras;
-    }
 
     private void apresentaFormCadastro(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        request.getSession().setAttribute("locadoras", getLocadoras());
+        request.getSession().setAttribute("listaLocadoras", new LocadoraDAO().getAll());
         RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/locacao/formulario.jsp");
         dispatcher.forward(request, response);
     }

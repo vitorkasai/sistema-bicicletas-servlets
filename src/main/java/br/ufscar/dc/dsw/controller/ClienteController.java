@@ -4,14 +4,11 @@ import br.ufscar.dc.dsw.dao.LocadoraDAO;
 import br.ufscar.dc.dsw.dao.ClienteDAO;
 import br.ufscar.dc.dsw.dao.UsuarioDAO;
 
-import br.ufscar.dc.dsw.domain.Locadora;
 import br.ufscar.dc.dsw.domain.Cliente;
 import br.ufscar.dc.dsw.domain.Usuario;
 
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -90,17 +87,10 @@ public class ClienteController extends HttpServlet {
         dispatcher.forward(request, response);
     }
 
-    private Map<Long, String> getLocadoras() {
-        Map<Long, String> locadoras = new HashMap<>();
-        for (Locadora locadora : new LocadoraDAO().getAll()) {
-            locadoras.put(locadora.getId(), locadora.getNome());
-        }
-        return locadoras;
-    }
 
     private void apresentaFormCadastro(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        request.getSession().setAttribute("locadoras", getLocadoras());
+        request.getSession().setAttribute("listaLocadoras", new LocadoraDAO().getAll());
         RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/cliente/formulario.jsp");
         dispatcher.forward(request, response);
     }
@@ -110,7 +100,7 @@ public class ClienteController extends HttpServlet {
         Long id = Long.parseLong(request.getParameter("id"));
         Cliente cliente = daoCliente.get(id);
         request.setAttribute("cliente", cliente);
-        request.getSession().setAttribute("locadoras", getLocadoras());
+        request.getSession().setAttribute("listaLocadoras", new LocadoraDAO().getAll());
         RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/cliente/formulario.jsp");
         dispatcher.forward(request, response);
     }

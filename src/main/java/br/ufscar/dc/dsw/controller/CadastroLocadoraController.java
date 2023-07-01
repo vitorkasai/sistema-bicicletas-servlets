@@ -5,8 +5,6 @@ import br.ufscar.dc.dsw.dao.UsuarioDAO;
 import br.ufscar.dc.dsw.domain.Locadora;
 import br.ufscar.dc.dsw.domain.Usuario;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -66,17 +64,10 @@ public class CadastroLocadoraController extends HttpServlet {
         }
     }
 
-    private Map<Long, String> getLocadoras() {
-        Map<Long, String> locadoras = new HashMap<>();
-        for (Locadora locadora : daoLocadora.getAll()) {
-            locadoras.put(locadora.getId(), locadora.getNome());
-        }
-        return locadoras;
-    }
 
     private void apresentaFormCadastro(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        request.getSession().setAttribute("locadoras", getLocadoras());
+        request.getSession().setAttribute("listaLocadoras", new LocadoraDAO().getAll());
         RequestDispatcher dispatcher = request.getRequestDispatcher("/cadastroUsuario/locadora/formulario.jsp");
         dispatcher.forward(request, response);
     }
@@ -97,7 +88,7 @@ public class CadastroLocadoraController extends HttpServlet {
             String cidade = request.getParameter("cidade");
             Locadora locadora = new Locadora(usuario.getId(), email, senha, nome, "0", "L", cnpj, cidade);
             daoLocadora.insert(locadora);
-            response.sendRedirect(request.getContextPath() + "/login.jsp");
+            response.sendRedirect(request.getContextPath() + "/index.jsp");
         } catch (RuntimeException | IOException e) {
             throw new ServletException(e);
         }
