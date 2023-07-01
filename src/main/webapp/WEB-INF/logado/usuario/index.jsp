@@ -15,6 +15,7 @@
         <ul>
             <li>
                 <c:if test="${sessionScope.usuarioLogado.tipoUsuario == 'C'}">
+                    <h1>Você está logado como Cliente</h1>
                     <a href="${pageContext.request.contextPath}/locacoes/cadastro">Cadastrar locação</a>
                     <div id="locacoesTableContainer" align="center">
                         <table id="locacoesTable" border="1">
@@ -25,21 +26,50 @@
                                 <th>Data</th>
                                 <th>Horario</th>
                             </tr>
-                            <!-- Popule a tabela com todas as locadoras inicialmente -->
+                            <!-- Tabela com as locações do cliente logado -->
                             <c:forEach var="locacao" items="${sessionScope.listaLocacoes}">
-                                <c:if test="${locacao.getCliente().getEmail() == sessionScope.usuarioLogado.getEmail()}">
+                                <c:if test="${locacao.cliente.email == sessionScope.usuarioLogado.email}">
                                     <tr>
-                                        <td>${locacao.getLocadora().getNome()}</td>
-                                        <td>${locacao.getLocadora().getCidade()}</td>
-                                        <td>${locacao.getDia()}</td>
-                                        <td>${locacao.getHorario()}</td>
+                                        <td>${locacao.locadora.nome}</td>
+                                        <td>${locacao.locadora.cidade}</td>
+                                        <td>${locacao.dia}</td>
+                                        <td>${locacao.horario}</td>
                                     </tr>
                                 </c:if>
-                                
                             </c:forEach>
                         </table>
                     </div>
                 </c:if>
+                
+                
+                <c:if test="${sessionScope.usuarioLogado.tipoUsuario == 'L'}">
+                    <h1>Você está logado como Locadora</h1>
+                    
+                    <div id="locacoesTableContainer" align="center">
+                        <table id="locacoesTable" border="1">
+                            <caption>Lista de Locações da Locadora</caption>
+                            <tr>
+                                <th>Nome do cliente</th>
+                                <th>Cidade</th>
+                                <th>Data</th>
+                                <th>Horario</th>
+                            </tr>
+                            <!-- Tabela com as locações da locadora logada -->
+                            <c:forEach var="locacao" items="${sessionScope.listaLocacoes}">
+                                <c:if test="${locacao.locadora.email == sessionScope.usuarioLogado.email}">
+                                    <tr>
+                                        <td>${locacao.locadora.nome}</td>
+                                        <td>${locacao.locadora.cidade}</td>
+                                        <td>${locacao.dia}</td>
+                                        <td>${locacao.horario}</td> 
+                                    </tr>
+                                </c:if>
+                            </c:forEach>
+                        </table>
+                    </div>
+                
+                </c:if>
+
             </li>
             <li>
                 <a href="${pageContext.request.contextPath}/logout.jsp">Sair</a>
