@@ -8,6 +8,8 @@ import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
+import br.ufscar.dc.dsw.domain.Usuario;
+import br.ufscar.dc.dsw.domain.Locadora;
 
 @WebServlet(urlPatterns = { "/SendEmail" })
 public class SendEmailController extends HttpServlet {
@@ -44,14 +46,18 @@ public class SendEmailController extends HttpServlet {
 
         // Criação de uma nova sessão de email
         Session sessao = Session.getInstance(propriedades, autenticador);
+        Usuario usuario = (Usuario) request.getSession().getAttribute("usuarioLogado");
+        Locadora locadora = (Locadora) request.getAttribute("locadoraParaEmail");
 
         // Criação da mensagem de email
         final Message mensagem = new MimeMessage(sessao);
         try {
             mensagem.setFrom(new InternetAddress(username));
             mensagem.setRecipients(Message.RecipientType.TO, InternetAddress.parse(username));
-            mensagem.setSubject("Assunto do email");
-            mensagem.setText("Conteúdo do email");
+            mensagem.setSubject("Nova locação realizada!");
+            mensagem.setText("Nome do cliente: " + usuario.getNome() + "\nEmail do cliente: " + usuario.getEmail()
+                    + "\n\nNome da locadora: " + locadora.getNome() + "\nEmail da locadora: " + locadora.getEmail()
+                    + "\n\n");
         } catch (MessagingException e) {
             e.printStackTrace();
         }

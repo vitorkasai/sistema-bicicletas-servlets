@@ -13,6 +13,7 @@ br/ufscar/dc/dsw/dao/ClienteDAO.class
 br/ufscar/dc/dsw/domain/Cliente.class
 br/ufscar/dc/dsw/controller/SendEmailController.class
 br/ufscar/dc/dsw/controller/LocadoraController.class
+br/ufscar/dc/dsw/controller/SendEmailController$2.class
 br/ufscar/dc/dsw/dao/UsuarioDAO.class
 br/ufscar/dc/dsw/util/Erro.class
 br/ufscar/dc/dsw/controller/ClienteController.class

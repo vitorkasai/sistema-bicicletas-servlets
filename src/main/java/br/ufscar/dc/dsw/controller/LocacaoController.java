@@ -121,11 +121,11 @@ public class LocacaoController extends HttpServlet {
                     dataLocacao, horario);
 
             daoLocacao.insert(locacao);
-            System.out.println(request.getContextPath());
+             
+            request.setAttribute("locadoraParaEmail", locadora);
             RequestDispatcher dispatcher = request.getRequestDispatcher("/SendEmail");
             dispatcher.forward(request, response);
             // response.sendRedirect("lista");
-
         } catch (ParseException | RuntimeException | IOException e) {
             throw new ServletException(e);
         }
