@@ -43,8 +43,18 @@
 	<tr>
 		<td><label for="cidade">Cidade</label></td>
 		<td>
-			<select id="cidade" name="cidade" required>
-			</select>
+			<c:choose>
+				<c:when test="${locadora.cidade != null}">
+					<input type="hidden" name="cidadeAtual" id="cidadeAtual" value="${locadora.cidade}">
+					<select id="cidade" name="cidade" required></select>
+				</c:when>
+				<c:otherwise>
+					<select id="cidade" name="cidade" required>
+						<option value="" selected disabled>Selecione uma cidade</option>
+					</select>
+				</c:otherwise>
+			</c:choose>
+	
 		</td>
 	</tr>
 	<tr>
@@ -68,16 +78,38 @@
 	
 		function loadCidades() {
 			var cidadeSelect = document.getElementById('cidade');
+			var cidadeAtualSelect = document.getElementById('cidadeAtual');
+			if (cidadeAtualSelect != null) {
+				var cidadeAtual = cidadeAtualSelect.value;
+			}
+			
 			var xhr = new XMLHttpRequest();
-			xhr.open('GET', '${pageContext.request.contextPath}/documentos/cidades.txt', true); // Substitua 'cidades.txt' pelo caminho correto do seu arquivo .txt de cidades
+			xhr.open('GET', '${pageContext.request.contextPath}/documentos/cidades.txt', true);
 			xhr.onreadystatechange = function() {
 				if (xhr.readyState === 4 && xhr.status === 200) {
 					var cidades = xhr.responseText.split('\n');
-					for (var i = 0; i < cidades.length; i++) {
-						var option = document.createElement('option');
-						option.text = cidades[i];
-						cidadeSelect.add(option);
+					// Edição de uma locadora já existente (marca como selecionada a cidade correspondente)		
+					if (cidadeAtualSelect != null) {
+						for (var i = 0; i < cidades.length; i++) {
+							var option = document.createElement('option');
+							option.text = cidades[i];
+							cidadeSelect.add(option);
+							console.log(cidades[i]);
+							if (cidades[i] == cidadeAtual) {
+								console.log("validei!");
+								option.selected = true;
+							}
+						}
 					}
+					// Adicionando locadora nova (padrão "Selecione uma cidade" selecionado)
+					else {
+						for (var i = 0; i < cidades.length; i++) {
+							var option = document.createElement('option');
+							option.text = cidades[i];
+							cidadeSelect.add(option);
+						}
+					}
+					
 				}
 			};
 			xhr.send();
