@@ -67,7 +67,6 @@
             // Remover a opção "Escolha uma locadora" quando uma opção válida for selecionada
             if (locadoraSelect.value !== '') {
               var escolhaOption = document.querySelector('#locadoraSelect option[value=""]');
-              escolhaOption.disabled = true;
               escolhaOption.style.display = 'none';
             }
           });

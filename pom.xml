@@ -50,6 +50,12 @@
     <version>8.0.30</version>
         <scope>runtime</scope>
 </dependency>
+<!-- JavaMail API -->
+    <dependency>
+        <groupId>com.sun.mail</groupId>
+        <artifactId>javax.mail</artifactId>
+        <version>1.6.2</version>
+    </dependency>
   </dependencies>
 
   <build>
