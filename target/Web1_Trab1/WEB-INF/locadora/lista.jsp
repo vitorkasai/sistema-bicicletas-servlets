@@ -6,6 +6,24 @@
 <html>
 <head>
 		<title>Gerenciamento de Locadoras</title>
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+		<link rel="stylesheet" type="text/css" href="<c:url value="/styles.css" />">
+
+
+		<style>
+			/* Estilo dos ícones de certo e errado */
+			.icon-certo {
+			  color: #50fa7b;
+			}
+		  
+			.icon-errado {
+			  color: #ff5555;
+			}
+			.dado-icone {
+				text-align: center;
+			}
+		  </style>
+
 	<script>
 		function confirmExclusion() {
 		  var message = document.getElementById("removalConfirmMessage").value;
@@ -37,6 +55,7 @@
 				<th>Nome</th>
 				<th>CNPJ</th>
 				<th>Cidade</th>
+				<th>Administrador</th>
 				<th>Ações</th>
 			</tr>
 			<c:forEach var="locadora" items="${sessionScope.listaLocadoras}">
@@ -47,11 +66,18 @@
 					<td>${locadora.nome}</td>
 					<td>${locadora.CNPJ}</td>
 					<td>${locadora.cidade}</td>
-					<td><a href="/<%= contextPath%>/locadoras/edicao?id=${locadora.id}">Edição</a>
+					<c:choose>
+						<c:when test="${locadora.getAdministrador() == '1'}">
+							<td class="dado-icone"><i class="fas fa-check icon-certo"></i></td>
+						</c:when>
+						<c:otherwise>
+							<td class="dado-icone"><i class="fas fa-times icon-errado"></i></td>
+						</c:otherwise>
+					</c:choose>
+					<td><a href="/<%= contextPath%>/locadoras/edicao?id=${locadora.id}"><i class="fas fa-pencil-alt"></i></a>
 						&nbsp;&nbsp;&nbsp;&nbsp; <a
 						href="/<%= contextPath%>/locadoras/remocao?id=${locadora.id}"
-						onclick="return confirmExclusion()">
-						Remoção</a></td>
+						onclick="return confirmExclusion()"><i class="fas fa-trash-alt"></i></a></td>
 				</tr>
 			</c:forEach>
 		</table>

@@ -7,7 +7,6 @@
 <% System.out.println("PASSEI POR: filtrarLocadoras.jsp"); %>
 
 <table id="locadorasTable" border="1">
-    <caption>Lista de Locadoras</caption>
     <tr>
         <th>Nome</th>
         <th>Cidade</th>

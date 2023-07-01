@@ -1,0 +1,61 @@
+/* Cor de fundo para a página */
+body {
+    background-color: #282a36;
+    color: #f8f8f2;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
+
+  /* Estilo dos títulos h1 e h2 */
+  h1, h2 {
+    color: #bd93f9;
+    font-weight: normal;
+    font-size: 24px;
+  }
+
+  /* Estilo dos links */
+  a {
+    color: #8be9fd;
+    text-decoration: none;
+  }
+
+  /* Estilo dos links ao passar o mouse */
+  a:hover {
+    color: #50fa7b;
+    text-decoration: none;
+  }
+
+  /* Estilo da tabela */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #282a36;
+    color: #f8f8f2;
+  }
+
+  /* Estilo das células do cabeçalho */
+  th {
+    background-color: #44475a;
+    font-weight: bold;
+    padding: 10px;
+    text-align: left;
+  }
+
+  /* Estilo das células das linhas pares */
+  tr:nth-child(even) {
+    background-color: #44475a;
+  }
+
+  /* Estilo das células das linhas ímpares */
+  tr:nth-child(odd) {
+    background-color: #383a59;
+  }
+
+  /* Estilo das células das linhas ao passar o mouse */
+  tr:hover {
+    background-color: #6272a4;
+  }
+
+  /* Estilo das células de dados */
+  td {
+    padding: 10px;
+  }

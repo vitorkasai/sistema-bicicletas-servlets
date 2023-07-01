@@ -6,120 +6,15 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <link rel="stylesheet" type="text/css" href="<c:url value="/login.css" />">
+
     <title>Autenticação de Usuário</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f5f5f5;
-            margin: 0;
-            padding: 20px;
-        }
-
-        h1, h2 {
-            color: #333;
-            text-align: center;
-        }
-
-        #erro {
-            background-color: #ffdddd;
-            border: 1px solid #ff9999;
-            color: #ff0000;
-            padding: 10px;
-            margin-bottom: 10px;
-        }
-
-        form {
-            margin-top: 20px;
-        }
-
-        table {
-            margin: 0 auto;
-        }
-
-        table th, table td {
-            padding: 5px;
-            text-align: left;
-        }
-
-        table th {
-            background-color: #eee;
-        }
-
-        #selectCidade {
-            margin-top: 20px;
-            padding: 5px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-        }
-
-        #locadorasTableContainer {
-            margin-top: 20px;
-            text-align: center;
-        }
-
-        #locadorasTable {
-            width: 100%;
-            border-collapse: collapse;
-        }
-
-        #locadorasTable caption {
-            font-weight: bold;
-            margin-bottom: 10px;
-        }
-
-        #locadorasTable th, #locadorasTable td {
-            padding: 8px;
-            border: 1px solid #ccc;
-        }
-
-        .login-container {
-            background-color: #f9f9f9;
-            padding: 20px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            width: fit-content;
-            margin: 0 auto;
-            text-align: left;
-            margin-bottom: 20px;
-        }
-
-        .login-form {
-            margin-bottom: 20px;
-        }
-
-        .login-form label {
-            display: block;
-            margin-bottom: 8px;
-        }
-
-        .login-form input[type="text"],
-        .login-form input[type="password"] {
-            width: 100%;
-            padding: 8px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            box-sizing: border-box;
-            margin-bottom: 10px;
-        }
-
-        .login-form input[type="submit"] {
-            background-color: #333;
-            color: #fff;
-            border: none;
-            border-radius: 4px;
-            padding: 10px 16px;
-            cursor: pointer;
-        }
-
-        .login-form input[type="submit"]:hover {
-            background-color: #555;
-        }
-    </style>
+    
 </head>
 <body>
 <% System.out.println("PASSEI POR: login.jsp"); %>
-<h1>Bem vindo ao Sistema de Locação de Bicicletas!!</h1>
-<h2>Login</h2>
+<h1>Bem vindo(a) ao Sistema de Locação de Bicicletas!</h1>
+
 <c:if test="${mensagens.existeErros}">
     <div id="erro">
         <ul>
@@ -129,29 +24,31 @@
         </ul>
     </div>
 </c:if>
+
 <div class="login-container">
+    <i class="fas fa-user fa-3x"></i>
+    <h2>Entrar</h2>
     <form class="login-form" method="post" action="index.jsp">
-        <label for="login">Login:</label>
-        <input type="text" name="login" id="login" value="${param.login}"/>
-        <label for="senha">Senha:</label>
-        <input type="password" name="senha" id="senha"/>
-        <input type="submit" name="bOK" value="Entrar"/>
+        <label for="login"></label>
+        <input type="text" name="login" id="login" value="${param.login}" placeholder="Email"/>
+        <label for="senha"></label>
+        <input type="password" name="senha" id="senha" placeholder="Senha"/>
+        <input type="submit" name="bOK" value="Login" id="logar"/>
     </form>
-    <div>
-        <!--Mudar o acesso para passar primeiro pelo controlador de cadastro de novos clientes/locadoras--> 
+    <div id="linksCadastroContainer">
+        <!--Mudar o acesso para passar primeiro pelo controlador de cadastro de novos clientes/locadoras-->
         <a href="${pageContext.request.contextPath}/registrar-cliente">Cadastre-se como cliente</a>
         <a href="${pageContext.request.contextPath}/registrar-locadora">Cadastre-se como locadora</a>
 
     </div>
 </div>
-<label for="selectCidade">Cidade: </label>
+
+<h2 id="listaLocadorasTitulo">Lista de locadoras</h2>
 <select name="selectCidade" id="selectCidade">
     <option value="vazio" selected style="background-color: gray;">Selecione uma cidade</option>
 </select>
-
 <div id="locadorasTableContainer">
     <table id="locadorasTable">
-        <caption>Lista de Locadoras</caption>
         <tr>
             <th>Nome</th>
             <th>Cidade</th>

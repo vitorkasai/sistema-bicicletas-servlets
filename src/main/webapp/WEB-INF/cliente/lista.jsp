@@ -6,6 +6,23 @@
 <html>
 <head>
 		<title>Locação Bicicletas</title>
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+		<link rel="stylesheet" type="text/css" href="<c:url value="/styles.css" />">
+
+
+		<style>
+			/* Estilo dos ícones de certo e errado */
+			.icon-certo {
+			  color: #50fa7b;
+			}
+		  
+			.icon-errado {
+			  color: #ff5555;
+			}
+			.dado-icone {
+				text-align: center;
+			}
+		  </style>
 </head>
 <body>
 	<% System.out.println("PASSEI POR: WEB-INF/cliente/lista.jsp"); %> 
@@ -32,6 +49,7 @@
 				<th>Telefone</th>
 				<th>Sexo</th>
 				<th>Data de Nascimento</th>
+				<th>Administrador</th>
 				<th>Ações</th>
 			</tr>
 			<c:forEach var="cliente" items="${requestScope.listaClientes}">
@@ -44,11 +62,18 @@
 					<td>${cliente.telefone}</td>
 					<td>${cliente.sexo}</td>
 					<td>${cliente.dataNascimento}</td>
-					<td><a href="/<%= contextPath%>/clientes/edicao?id=${cliente.id}">Edição</a>
+					<c:choose>
+						<c:when test="${cliente.getAdministrador() == '1'}">
+							<td class="dado-icone"><i class="fas fa-check icon-certo"></i></td>
+						</c:when>
+						<c:otherwise>
+							<td class="dado-icone"><i class="fas fa-times icon-errado"></i></td>
+						</c:otherwise>
+					</c:choose>
+					<td><a href="/<%= contextPath%>/clientes/edicao?id=${cliente.id}"><i class="fas fa-pencil-alt"></i></a>
 						&nbsp;&nbsp;&nbsp;&nbsp; <a
 						href="/<%= contextPath%>/clientes/remocao?id=${cliente.id}"
-						onclick="return confirm('Tem certeza de que deseja excluir este item?');">
-						Remoção</a></td>
+						onclick="return confirm('Tem certeza de que deseja excluir este item?');"><i class="fas fa-trash-alt"></i></a></td>
 				</tr>
 			</c:forEach>
 		</table>

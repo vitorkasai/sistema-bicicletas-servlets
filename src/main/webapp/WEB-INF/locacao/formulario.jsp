@@ -8,7 +8,102 @@
 <html>
     <head>
         <title>Gerenciamento de locações de um cliente</title>
+        
         <style>
+            body {
+                background-color: #282a36;
+                color: #f8f8f2;
+                font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            }
+    
+            h1 {
+                color: #bd93f9;
+            }
+    
+            h2 a {
+                color: #8be9fd;
+                text-decoration: none;
+            }
+    
+            h2 a:hover {
+                color: #50fa7b;
+            }
+    
+            div.form-container {
+                margin: 50px auto;
+                max-width: 600px;
+                padding: 20px;
+                background-color: #44475a;
+                border-radius: 5px;
+            }
+    
+            table {
+                width: 100%;
+                border-collapse: collapse;
+                background-color: #282a36;
+                color: #f8f8f2;
+                border: 1px solid #6272a4;
+            }
+    
+            caption {
+                font-size: 18px;
+                font-weight: bold;
+                padding: 10px;
+            }
+    
+            th {
+                background-color: #44475a;
+                font-weight: bold;
+                padding: 10px;
+                text-align: left;
+                border-bottom: 1px solid #6272a4;
+            }
+    
+            td {
+                padding: 10px;
+                border-bottom: 1px solid #6272a4;
+            }
+    
+            label {
+                color: #f8f8f2;
+                font-weight: bold;
+            }
+    
+            input[type="date"],
+            input[type="time"],
+            select {
+                width: 100%;
+                padding: 10px;
+                margin-bottom: 10px;
+                border: 1px solid #44475a;
+                background-color: #282a36;
+                color: #f8f8f2;
+                border-radius: 5px;
+            }
+    
+            input[type="submit"] {
+                padding: 10px 20px;
+                background-color: #50fa7b;
+                color: #282a36;
+                border: none;
+                cursor: pointer;
+                border-radius: 5px;
+            }
+    
+            ul.erro {
+                list-style-type: none;
+                padding: 0;
+                margin-top: 20px;
+                background-color: #ff5555;
+                color: #282a36;
+                border-radius: 5px;
+            }
+    
+            ul.erro li {
+                padding: 10px;
+            }
+    
+            
             .horarioUsado {
                 border: 1px solid red;
             }

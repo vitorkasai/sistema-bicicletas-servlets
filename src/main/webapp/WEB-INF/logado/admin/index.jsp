@@ -4,17 +4,18 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title>Menu do Sistema</title>
     <style>
+        
         body {
-            font-family: Arial, sans-serif;
-            background-color: #f5f5f5;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #282a36;
             margin: 0;
             padding: 20px;
+            color: #f8f8f2;
         }
 
         h1 {
-            color: #333;
+            color: #bd93f9;
             text-align: center;
         }
 
@@ -35,15 +36,15 @@
         }
 
         a {
-            color: #333;
+            color: #f8f8f2;
             text-decoration: none;
             padding: 5px 10px;
-            border: 1px solid #ccc;
+            border: 1px solid #bd93f9;
             border-radius: 4px;
         }
 
         a:hover {
-            background-color: #eee;
+            background-color: #44475a;
         }
 
         .logout-button {
@@ -52,6 +53,8 @@
             margin-top: 20px;
         }
     </style>
+    <title>Menu do Sistema</title>
+    
 </head>
 <body>
 <% System.out.println("PASSEI POR: WEB-INF/logado/admin/index.jsp"); %>
