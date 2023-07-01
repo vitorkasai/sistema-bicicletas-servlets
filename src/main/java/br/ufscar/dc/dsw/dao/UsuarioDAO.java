@@ -97,6 +97,8 @@ public class UsuarioDAO extends GenericDAO {
             throw new RuntimeException(e);
         }
      return usuario;
+
+
     }
 
 
@@ -159,5 +161,4 @@ public class UsuarioDAO extends GenericDAO {
             throw new RuntimeException(e);
         }
     }
-
 }

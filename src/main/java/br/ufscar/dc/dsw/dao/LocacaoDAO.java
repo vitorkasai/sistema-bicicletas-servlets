@@ -23,7 +23,6 @@ public class LocacaoDAO extends GenericDAO {
         try {
             Connection conn = this.getConnection();
             Statement statement = conn.createStatement();
-;
             ResultSet resultSet = statement.executeQuery(sql);
             while (resultSet.next()) {
                 String CPF = resultSet.getString("CPF");
@@ -137,4 +136,31 @@ public class LocacaoDAO extends GenericDAO {
         }
     }
 
+    public List<Locacao> getDataHorarioCPF(String CPF) {
+        List<Locacao> listaDataHorario = new ArrayList<>();
+        // Retorna todas as colunas de locadora e também aqueles dados vindos da classe pai Usuario
+        String sql = "select l.* from locacao l inner join cliente c on l.CPF = c.CPF where c.CPF = ?;";
+
+        try {
+            Connection conn = this.getConnection();
+            PreparedStatement statement = conn.prepareStatement(sql);
+
+            statement.setString(1, CPF);
+
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                String CNPJ = resultSet.getString("CNPJ");
+                Date dia = resultSet.getDate("dia");
+                Time horario = resultSet.getTime("horario");
+                Locacao locacao = new Locacao(new ClienteDAO().get(CPF), new LocadoraDAO().get(CNPJ), dia, horario);
+                listaDataHorario.add(locacao); 
+            }
+            resultSet.close();
+            statement.close();
+            conn.close();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return listaDataHorario;
+    }
 }
