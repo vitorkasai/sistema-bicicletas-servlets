@@ -94,9 +94,7 @@
 							var option = document.createElement('option');
 							option.text = cidades[i];
 							cidadeSelect.add(option);
-							console.log(cidades[i]);
 							if (cidades[i] == cidadeAtual) {
-								console.log("validei!");
 								option.selected = true;
 							}
 						}

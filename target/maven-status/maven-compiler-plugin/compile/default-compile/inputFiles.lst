@@ -1,3 +1,4 @@
+/home/leonardo/Web1_Geral/DSW1-AA1/src/main/java/br/ufscar/dc/dsw/controller/CadastroLocadoraController.java
 /home/leonardo/Web1_Geral/DSW1-AA1/src/main/java/br/ufscar/dc/dsw/dao/GenericDAO.java
 /home/leonardo/Web1_Geral/DSW1-AA1/src/main/java/br/ufscar/dc/dsw/domain/Locacao.java
 /home/leonardo/Web1_Geral/DSW1-AA1/src/main/java/br/ufscar/dc/dsw/controller/LocacaoController.java
@@ -12,6 +13,7 @@
 /home/leonardo/Web1_Geral/DSW1-AA1/src/main/java/br/ufscar/dc/dsw/domain/Locadora.java
 /home/leonardo/Web1_Geral/DSW1-AA1/src/main/java/br/ufscar/dc/dsw/dao/LocadoraDAO.java
 /home/leonardo/Web1_Geral/DSW1-AA1/src/main/java/br/ufscar/dc/dsw/domain/Cliente.java
+/home/leonardo/Web1_Geral/DSW1-AA1/src/main/java/br/ufscar/dc/dsw/controller/CadastroClienteController.java
 /home/leonardo/Web1_Geral/DSW1-AA1/src/main/java/br/ufscar/dc/dsw/util/Erro.java
 /home/leonardo/Web1_Geral/DSW1-AA1/src/main/java/br/ufscar/dc/dsw/dao/LocacaoDAO.java
 /home/leonardo/Web1_Geral/DSW1-AA1/src/main/java/br/ufscar/dc/dsw/domain/Usuario.java

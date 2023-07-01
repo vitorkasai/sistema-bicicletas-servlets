@@ -137,6 +137,12 @@
         <input type="password" name="senha" id="senha"/>
         <input type="submit" name="bOK" value="Entrar"/>
     </form>
+    <div>
+        <!--Mudar o acesso para passar primeiro pelo controlador de cadastro de novos clientes/locadoras--> 
+        <a href="${pageContext.request.contextPath}/registrar-cliente">Cadastre-se como cliente</a>
+        <a href="${pageContext.request.contextPath}/registrar-locadora">Cadastre-se como locadora</a>
+
+    </div>
 </div>
 <label for="selectCidade">Cidade: </label>
 <select name="selectCidade" id="selectCidade">
