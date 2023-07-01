@@ -27,12 +27,15 @@
                             </tr>
                             <!-- Popule a tabela com todas as locadoras inicialmente -->
                             <c:forEach var="locacao" items="${sessionScope.listaLocacoes}">
-                                <tr>
-                                    <td>${locacao.getLocadora().getNome()}</td>
-                                    <td>${locacao.getLocadora().getCidade()}</td>
-                                    <td>${locacao.getDia()}</td>
-                                    <td>${locacao.getHorario()}</td>
-                                </tr>
+                                <c:if test="${locacao.getCliente().getEmail() == sessionScope.usuarioLogado.getEmail()}">
+                                    <tr>
+                                        <td>${locacao.getLocadora().getNome()}</td>
+                                        <td>${locacao.getLocadora().getCidade()}</td>
+                                        <td>${locacao.getDia()}</td>
+                                        <td>${locacao.getHorario()}</td>
+                                    </tr>
+                                </c:if>
+                                
                             </c:forEach>
                         </table>
                     </div>

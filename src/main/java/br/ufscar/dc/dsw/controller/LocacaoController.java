@@ -129,7 +129,6 @@ public class LocacaoController extends HttpServlet {
                 // response.sendRedirect("lista");
             }
             else {
-                System.out.println("ERRO LOCAÇÃO: " + request.getAttribute("erroLocacao"));
                 request.setAttribute("erroLocacao", "Horário indisponível");
                 //apresentaFormCadastro(request, response);
                 RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/locacao/formulario.jsp");

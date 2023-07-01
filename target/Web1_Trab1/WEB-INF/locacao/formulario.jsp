@@ -50,8 +50,6 @@
                     </tr>
                     
                     <tr>
-                        ${erroLocacao}
-                        <% System.out.println("Novamente aqui na hora"); %>
                         <c:choose>
                             <c:when test="${erroLocacao != 'Horário indisponível'}">
                                 <td><label for="hora">Hora</label></td>
