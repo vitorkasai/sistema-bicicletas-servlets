@@ -12,8 +12,13 @@
 	</caption>
    	<tr>
    		<td><label for="email">Email</label></td>
-   		<td><input type="email" id="email" name="email" size="45"
-   			required maxlength="256" /></td>
+   		<td>
+			<input type="email" id="email" name="email" size="45"
+   			required maxlength="256" />
+			<c:if test="${mensagemErro == 'O email já está em uso.'}">
+				<div class="error-message">${mensagemErro}</div>
+			</c:if>
+		</td>
    	</tr>
    	<tr>
    		<td><label for="senha">Senha</label></td>
@@ -26,7 +31,12 @@
    	</tr>
    	<tr>
    		<td><label for="CPF">CPF</label></td>
-   		<td><input type="text" id="CPF" name="CPF" required maxlength="11" /></td>
+   		<td>
+			<input type="text" id="CPF" name="CPF" required maxlength="11" />
+			<c:if test="${mensagemErro == 'O CPF já está em uso.'}">
+				<div class="error-message">${mensagemErro}</div>
+			</c:if>
+		</td>
    	</tr>
 	<tr>
 		

@@ -87,7 +87,6 @@ public class ClienteController extends HttpServlet {
         dispatcher.forward(request, response);
     }
 
-
     private void apresentaFormCadastro(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         request.getSession().setAttribute("listaLocadoras", new LocadoraDAO().getAll());
@@ -100,6 +99,7 @@ public class ClienteController extends HttpServlet {
         Long id = Long.parseLong(request.getParameter("id"));
         Cliente cliente = daoCliente.get(id);
         request.setAttribute("cliente", cliente);
+        request.getSession().setAttribute("clienteSelecionadoCRUD", cliente);
         request.getSession().setAttribute("listaLocadoras", new LocadoraDAO().getAll());
         RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/cliente/formulario.jsp");
         dispatcher.forward(request, response);
@@ -109,7 +109,27 @@ public class ClienteController extends HttpServlet {
         request.setCharacterEncoding("UTF-8");
 
         try {
+
             String email = request.getParameter("email");
+            // Verificar se o email já existe
+            if (daoUsuario.get(email) != null) {
+                String mensagemErro = "O email já está em uso.";
+                request.setAttribute("mensagemErro", mensagemErro);
+                RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/cliente/formulario.jsp");
+                dispatcher.forward(request, response);
+                return;
+            }
+
+            String CPF = request.getParameter("CPF");
+            // Verificar se o CPF já existe
+            if (daoCliente.get(CPF) != null) {
+                String mensagemErro = "O CPF já está em uso.";
+                request.setAttribute("mensagemErro", mensagemErro);
+                RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/cliente/formulario.jsp");
+                dispatcher.forward(request, response);
+                return;
+            }
+
             String nome = request.getParameter("nome");
             String senha = request.getParameter("senha");
 
@@ -117,11 +137,9 @@ public class ClienteController extends HttpServlet {
             if (administrador == null) {
                 administrador = "0";
             }
-
             Usuario usuario = new Usuario(email, senha, nome, administrador, "C");
             daoUsuario.insert(usuario);
 
-            String CPF = request.getParameter("CPF");
             String telefone = request.getParameter("telefone");
             String sexo = request.getParameter("sexo");
             SimpleDateFormat reFormat = new SimpleDateFormat("yyyy-MM-dd");
@@ -146,17 +164,45 @@ public class ClienteController extends HttpServlet {
         request.setCharacterEncoding("UTF-8");
 
         try {
-            String email = request.getParameter("email");
-            String senha = request.getParameter("senha");
-            String nome = request.getParameter("nome");
 
+            String email = request.getParameter("email");
+            String CPF = request.getParameter("CPF");
+            Cliente clienteSelecionado = (Cliente) request.getSession().getAttribute("clienteSelecionadoCRUD");
+            if (clienteSelecionado != null) {
+                Usuario usuarioSelecionado = daoUsuario.get(clienteSelecionado.getId());
+                if (usuarioSelecionado != null) {
+                    // Verificar se o email já existe
+                    if (daoUsuario.get(email) != null
+                            && !daoUsuario.get(email).getEmail().equals(usuarioSelecionado.getEmail())) {
+                        String mensagemErro = "O email já está em uso.";
+                        request.setAttribute("mensagemErro", mensagemErro);
+                        apresentaFormEdicao(request, response);
+                        //RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/cliente/formulario.jsp");
+                        //dispatcher.forward(request, response);
+                        //return;
+                    }
+
+                    // Verificar se o CPF já existe
+                    if (daoCliente.get(CPF) != null
+                            && !daoCliente.get(CPF).getCPF().equals(clienteSelecionado.getCPF())) {
+                        String mensagemErro = "O CPF já está em uso.";
+                        request.setAttribute("mensagemErro", mensagemErro);
+                        apresentaFormEdicao(request, response);
+                        //RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/cliente/formulario.jsp");
+                        //dispatcher.forward(request, response);
+                        //return;
+                    }
+                }
+
+            }
+
+            String nome = request.getParameter("nome");
+            String senha = request.getParameter("senha");
             String administrador = request.getParameter("administrador");
             if (administrador == null) {
                 administrador = "0";
             }
-
             Usuario usuario = daoUsuario.get(Long.parseLong(request.getParameter("id")));
-
             usuario.setEmail(email);
             usuario.setSenha(senha);
             usuario.setNome(nome);

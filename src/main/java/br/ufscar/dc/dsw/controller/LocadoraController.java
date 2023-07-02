@@ -93,6 +93,7 @@ public class LocadoraController extends HttpServlet {
             throws ServletException, IOException {
         Long id = Long.parseLong(request.getParameter("id"));
         Locadora locadora = daoLocadora.get(id);
+        request.getSession().setAttribute("locadoraSelecionadaCRUD", locadora);
         request.setAttribute("locadora", locadora);
         request.getSession().setAttribute("listaLocadoras",  new LocadoraDAO().getAll());
         RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/locadora/formulario.jsp");
@@ -104,6 +105,26 @@ public class LocadoraController extends HttpServlet {
 
         try {
             String email = request.getParameter("email");
+
+            // Verificar se o email já existe
+            if (daoUsuario.get(email) != null) {
+                String mensagemErro = "O email já está em uso.";
+                request.setAttribute("mensagemErro", mensagemErro);
+                RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/locadora/formulario.jsp");
+                dispatcher.forward(request, response);
+                return;
+            }
+
+            String cnpj = request.getParameter("cnpj");
+            // Verificar se o CPF já existe
+            if (daoLocadora.get(cnpj) != null) {
+                String mensagemErro = "O CNPJ já está em uso.";
+                request.setAttribute("mensagemErro", mensagemErro);
+                RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/locadora/formulario.jsp");
+                dispatcher.forward(request, response);
+                return;
+            }
+
             String senha = request.getParameter("senha");
             String nome = request.getParameter("nome");
 
@@ -114,8 +135,8 @@ public class LocadoraController extends HttpServlet {
 
             Usuario usuario = new Usuario(email, senha, nome, administrador, "L");
             daoUsuario.insert(usuario);
+
             usuario = daoUsuario.get(email);
-            String cnpj = request.getParameter("cnpj");
             String cidade = request.getParameter("cidade");
             Locadora locadora = new Locadora(usuario.getId(), email, senha, nome, administrador, "L", cnpj, cidade);
             daoLocadora.insert(locadora);
@@ -131,7 +152,35 @@ public class LocadoraController extends HttpServlet {
         request.setCharacterEncoding("UTF-8");
 
         try {
+            String cnpj = request.getParameter("cnpj");
             String email = request.getParameter("email");
+            Locadora locadoraSelecionada = (Locadora) request.getSession().getAttribute("locadoraSelecionadaCRUD");
+            if (locadoraSelecionada != null) {
+                Usuario usuarioSelecionado = daoUsuario.get(locadoraSelecionada.getId());
+                if (usuarioSelecionado != null) {
+                    // Verificar se o email já existe
+                    if (daoUsuario.get(email) != null && !daoUsuario.get(email).getEmail().equals(usuarioSelecionado.getEmail())) {
+                        String mensagemErro = "O email já está em uso.";
+                        request.setAttribute("mensagemErro", mensagemErro);
+                        apresentaFormEdicao(request, response);
+                        //RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/locadora/formulario.jsp");
+                        //dispatcher.forward(request, response);
+                        //return;
+                    }
+                    // Verificar se o CNPJ já existe
+                    if (daoLocadora.get(cnpj) != null && !daoLocadora.get(cnpj).getCNPJ().equals(locadoraSelecionada.getCNPJ())) {
+                        String mensagemErro = "O CNPJ já está em uso.";
+                        request.setAttribute("mensagemErro", mensagemErro);
+                        apresentaFormEdicao(request, response);
+                        //RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/locadora/formulario.jsp");
+                        //dispatcher.forward(request, response);
+                        //return;
+                    }
+                }
+                
+            }
+            
+
             String senha = request.getParameter("senha");
             String nome = request.getParameter("nome");
 
@@ -148,7 +197,6 @@ public class LocadoraController extends HttpServlet {
             usuario.setAdministrador(administrador);
             daoUsuario.update(usuario);
 
-            String cnpj = request.getParameter("cnpj");
             String cidade = request.getParameter("cidade");
             Locadora locadora = daoLocadora.get(usuario.getId());
 

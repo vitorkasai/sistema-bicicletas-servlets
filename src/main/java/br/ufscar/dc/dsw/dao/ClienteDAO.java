@@ -176,5 +176,4 @@ public class ClienteDAO extends GenericDAO {
             throw new RuntimeException(e);
         }
     }
-
 }

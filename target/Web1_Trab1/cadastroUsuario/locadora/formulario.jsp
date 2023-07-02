@@ -10,7 +10,8 @@
 			body {
 				background-color: #282a36;
 				color: #f8f8f2;
-				font-family: 'Courier New', Courier, monospace;
+				font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+
 			}
 	
 			h1 {
@@ -90,6 +91,9 @@
 	
 			ul.erro li {
 				padding: 10px;
+			}
+			.error-message {
+				border: 1px solid red;
 			}
 		</style>
 </head>

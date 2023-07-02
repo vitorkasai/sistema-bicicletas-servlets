@@ -74,24 +74,45 @@ public class CadastroClienteController extends HttpServlet {
 
         try {
             String email = request.getParameter("email");
+            // Verificar se o email já existe
+            if (daoUsuario.get(email) != null) {
+                String mensagemErro = "O email já está em uso.";
+                request.setAttribute("mensagemErro", mensagemErro);
+                RequestDispatcher dispatcher = request.getRequestDispatcher("/cadastroUsuario/cliente/formulario.jsp");
+                dispatcher.forward(request, response);
+                return;
+            }
+
+            String CPF = request.getParameter("CPF");
+            // Verificar se o CPF já existe
+            if (daoCliente.get(CPF) != null) {
+                String mensagemErro = "O CPF já está em uso.";
+                request.setAttribute("mensagemErro", mensagemErro);
+                RequestDispatcher dispatcher = request.getRequestDispatcher("/cadastroUsuario/cliente/formulario.jsp");
+                dispatcher.forward(request, response);
+                return;
+            }
+
             String nome = request.getParameter("nome");
             String senha = request.getParameter("senha");
 
-            Usuario usuario = new Usuario(email, senha, nome, "0", "C");
+            String administrador = request.getParameter("administrador");
+            if (administrador == null) {
+                administrador = "0";
+            }
+            Usuario usuario = new Usuario(email, senha, nome, administrador, "C");
             daoUsuario.insert(usuario);
 
-            String CPF = request.getParameter("CPF");
             String telefone = request.getParameter("telefone");
             String sexo = request.getParameter("sexo");
             SimpleDateFormat reFormat = new SimpleDateFormat("yyyy-MM-dd");
             java.util.Date data_sem_formatar = reFormat.parse(request.getParameter("dataNascimento"));
             java.sql.Date dataNascimento = new java.sql.Date(data_sem_formatar.getTime());
             usuario = daoUsuario.get(email);
-            Cliente cliente = new Cliente(usuario.getId(), email, senha, nome, "0", "C", CPF, telefone, sexo,
+
+            Cliente cliente = new Cliente(usuario.getId(), email, senha, nome, administrador, "C", CPF, telefone, sexo,
                     dataNascimento);
-
             daoCliente.insert(cliente);
-
             response.sendRedirect(request.getContextPath() + "/index.jsp");
 
         } catch (ParseException | RuntimeException | IOException e) {

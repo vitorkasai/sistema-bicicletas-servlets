@@ -92,6 +92,9 @@
 			ul.erro li {
 				padding: 10px;
 			}
+			.error-message {
+				border: 1px solid red;
+			}
 		</style>
 </head>
 

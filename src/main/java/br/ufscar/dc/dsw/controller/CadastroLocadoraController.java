@@ -77,16 +77,40 @@ public class CadastroLocadoraController extends HttpServlet {
 
         try {
             String email = request.getParameter("email");
+
+            // Verificar se o email já existe
+            if (daoUsuario.get(email) != null) {
+                String mensagemErro = "O email já está em uso.";
+                request.setAttribute("mensagemErro", mensagemErro);
+                RequestDispatcher dispatcher = request.getRequestDispatcher("/cadastroUsuario/locadora/formulario.jsp");
+                dispatcher.forward(request, response);
+                return;
+            }
+
+            String cnpj = request.getParameter("cnpj");
+            // Verificar se o CPF já existe
+            if (daoLocadora.get(cnpj) != null) {
+                String mensagemErro = "O CNPJ já está em uso.";
+                request.setAttribute("mensagemErro", mensagemErro);
+                RequestDispatcher dispatcher = request.getRequestDispatcher("/cadastroUsuario/locadora/formulario.jsp");
+                dispatcher.forward(request, response);
+                return;
+            }
+
             String senha = request.getParameter("senha");
             String nome = request.getParameter("nome");
 
-            Usuario usuario = new Usuario(email, senha, nome, "0", "L");
+            String administrador = request.getParameter("administrador");
+            if (administrador == null) {
+                administrador = "0";
+            }
+
+            Usuario usuario = new Usuario(email, senha, nome, administrador, "L");
             daoUsuario.insert(usuario);
+
             usuario = daoUsuario.get(email);
-            
-            String cnpj = request.getParameter("cnpj");
             String cidade = request.getParameter("cidade");
-            Locadora locadora = new Locadora(usuario.getId(), email, senha, nome, "0", "L", cnpj, cidade);
+            Locadora locadora = new Locadora(usuario.getId(), email, senha, nome, administrador, "L", cnpj, cidade);
             daoLocadora.insert(locadora);
             response.sendRedirect(request.getContextPath() + "/index.jsp");
         } catch (RuntimeException | IOException e) {

@@ -116,6 +116,9 @@
 			.form-container input[type="submit"]:hover {
 				background-color: #8be9fd;
 			}
+			.error-message {
+				border: 1px solid red;
+			}
 		</style>
 </head>
 
