@@ -52,8 +52,10 @@ public class LocacaoController extends HttpServlet {
 		int hour = calendar.get(Calendar.HOUR_OF_DAY);
 		Time horaAtualSistema = new Time(hour, 0, 0);
 
-        request.setAttribute("horaAtualSistema", horaAtualSistema);
-		request.setAttribute("dataAtualSistema", dataAtualSistema);
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+		String dataAtualSistemaString = dateFormat.format(dataAtualSistema);
+		request.setAttribute("horaAtualSistema", horaAtualSistema);
+		request.setAttribute("dataAtualSistemaString", dataAtualSistemaString);
         
         Usuario usuario = (Usuario) request.getSession().getAttribute("usuarioLogado");
 

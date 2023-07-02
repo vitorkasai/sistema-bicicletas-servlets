@@ -100,15 +100,18 @@
                         <th><fmt:message key="horario" /></th>
                         
                     </tr>
+                    
                     <!-- Tabela com as locações do cliente logado -->
                     <c:forEach var="locacao" items="${sessionScope.listaLocacoes}">
                         <c:if test="${locacao.cliente.email == sessionScope.usuarioLogado.email}">
-                            <!-- ${requestScope.dataAtualSistema > locacao.dia || requestScope.dataAtualSistema == locacao.dia && requestScope.horaAtualSistema >= locacao.horario}
+                            <!-- ${requestScope.dataAtualSistema.compareTo(locacao.dia) > 0 || (requestScope.dataAtualSistema.compareTo(locacao.dia) == 0 && requestScope.horaAtualSistema >= locacao.horario)}
                             -->
-
                             <!-- Se for verdadeiro, a locação já expirou -->
+                            
+                            
+
                             <c:choose>
-                                <c:when test="${requestScope.dataAtualSistema.compareTo(locacao.dia) > 0 || (requestScope.dataAtualSistema.compareTo(locacao.dia) == 0 && requestScope.horaAtualSistema >= locacao.horario)}">
+                                <c:when test="${requestScope.dataAtualSistemaString > locacao.dia || requestScope.dataAtualSistemaString == locacao.dia && requestScope.horaAtualSistema.compareTo(locacao.horario) >= 0}">
                                     <tr class="locacaoExpirada">
                                         <td>${locacao.locadora.nome}</td>
                                         <td>${locacao.locadora.cidade}</td>
@@ -147,9 +150,11 @@
                     <!-- Tabela com as locações da locadora logada -->
                     <c:forEach var="locacao" items="${sessionScope.listaLocacoes}">
                         <c:if test="${locacao.locadora.email == sessionScope.usuarioLogado.email}">
+                            
+                            
                             <!-- Se for verdadeiro, a locação já expirou -->
                             <c:choose>
-                                <c:when test="${requestScope.dataAtualSistema.compareTo(locacao.dia) > 0 || (requestScope.dataAtualSistema.compareTo(locacao.dia) == 0 && requestScope.horaAtualSistema >= locacao.horario)}">
+                                <c:when test="${requestScope.dataAtualSistemaString > locacao.dia || requestScope.dataAtualSistemaString == locacao.dia && requestScope.horaAtualSistema.compareTo(locacao.horario) >= 0}">
                                     <tr class="locacaoExpirada">
                                         <td>${locacao.cliente.nome}</td>
                                         <td>${locacao.cliente.CPF}</td>
@@ -173,6 +178,7 @@
         </c:if>
 
         <!-- Para colocar as expiradas no começo-->
+        
         <script>
             window.addEventListener('DOMContentLoaded', function() {
                 var table = document.querySelector('table');
@@ -196,6 +202,8 @@
                 });
             });
         </script>
+    
+        
     </body>
 </fmt:bundle>
 </html>

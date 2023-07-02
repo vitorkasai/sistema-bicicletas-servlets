@@ -3,6 +3,7 @@ package br.ufscar.dc.dsw.controller;
 import java.io.IOException;
 import java.util.Calendar;
 import java.sql.Time;
+import java.text.SimpleDateFormat;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -35,8 +36,11 @@ public class UsuarioController extends HttpServlet {
 		Calendar calendar = Calendar.getInstance();
 		int hour = calendar.get(Calendar.HOUR_OF_DAY);
 		Time horaAtualSistema = new Time(hour, 0, 0);
+
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+		String dataAtualSistemaString = dateFormat.format(dataAtualSistema);
 		request.setAttribute("horaAtualSistema", horaAtualSistema);
-		request.setAttribute("dataAtualSistema", dataAtualSistema);
+		request.setAttribute("dataAtualSistemaString", dataAtualSistemaString);
 			
 
 		Usuario usuario = (Usuario) request.getSession().getAttribute("usuarioLogado");
