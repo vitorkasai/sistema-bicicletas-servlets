@@ -71,6 +71,12 @@
             td {
                 padding: 10px;
             }
+            .locacaoExpirada {
+                opacity: 0.6;
+                background-color: rgba(209, 65, 65, 0.678); /* Altera a cor de fundo */
+                color: #a9a9a9; /* Altera a cor do texto */
+                border: 1px solid #a9a9a9; /* Adiciona uma borda */
+            }
         </style>
 
     </head>
@@ -92,16 +98,34 @@
                         <th><fmt:message key="cidade" /></th>
                         <th><fmt:message key="data" /></th>
                         <th><fmt:message key="horario" /></th>
+                        
                     </tr>
                     <!-- Tabela com as locações do cliente logado -->
                     <c:forEach var="locacao" items="${sessionScope.listaLocacoes}">
                         <c:if test="${locacao.cliente.email == sessionScope.usuarioLogado.email}">
-                            <tr>
-                                <td>${locacao.locadora.nome}</td>
-                                <td>${locacao.locadora.cidade}</td>
-                                <td>${locacao.dia}</td>
-                                <td>${locacao.horario}</td>
-                            </tr>
+                            <!-- ${requestScope.dataAtualSistema > locacao.dia || requestScope.dataAtualSistema == locacao.dia && requestScope.horaAtualSistema >= locacao.horario}
+                            -->
+
+                            <!-- Se for verdadeiro, a locação já expirou -->
+                            <c:choose>
+                                <c:when test="${requestScope.dataAtualSistema.compareTo(locacao.dia) > 0 || (requestScope.dataAtualSistema.compareTo(locacao.dia) == 0 && requestScope.horaAtualSistema >= locacao.horario)}">
+                                    <tr class="locacaoExpirada">
+                                        <td>${locacao.locadora.nome}</td>
+                                        <td>${locacao.locadora.cidade}</td>
+                                        <td>${locacao.dia}</td>
+                                        <td>${locacao.horario}</td>
+                                    </tr>
+                                </c:when>
+                                <c:otherwise>
+                                    <tr>
+                                        <td>${locacao.locadora.nome}</td>
+                                        <td>${locacao.locadora.cidade}</td>
+                                        <td>${locacao.dia}</td>
+                                        <td>${locacao.horario}</td>
+                                    </tr>
+                                </c:otherwise>
+                            </c:choose>
+                            
                         </c:if>
                     </c:forEach>
                 </table>
@@ -123,17 +147,55 @@
                     <!-- Tabela com as locações da locadora logada -->
                     <c:forEach var="locacao" items="${sessionScope.listaLocacoes}">
                         <c:if test="${locacao.locadora.email == sessionScope.usuarioLogado.email}">
-                            <tr>
-                                <td>${locacao.cliente.nome}</td>
-                                <td>${locacao.cliente.CPF}</td>
-                                <td>${locacao.dia}</td>
-                                <td>${locacao.horario}</td> 
-                            </tr>
+                            <!-- Se for verdadeiro, a locação já expirou -->
+                            <c:choose>
+                                <c:when test="${requestScope.dataAtualSistema.compareTo(locacao.dia) > 0 || (requestScope.dataAtualSistema.compareTo(locacao.dia) == 0 && requestScope.horaAtualSistema >= locacao.horario)}">
+                                    <tr class="locacaoExpirada">
+                                        <td>${locacao.cliente.nome}</td>
+                                        <td>${locacao.cliente.CPF}</td>
+                                        <td>${locacao.dia}</td>
+                                        <td>${locacao.horario}</td>
+                                    </tr>
+                                </c:when>
+                                <c:otherwise>
+                                    <tr>
+                                        <td>${locacao.cliente.nome}</td>
+                                        <td>${locacao.cliente.CPF}</td>
+                                        <td>${locacao.dia}</td>
+                                        <td>${locacao.horario}</td>
+                                    </tr>
+                                </c:otherwise>
+                            </c:choose>
                         </c:if>
                     </c:forEach>
                 </table>
             </div> 
         </c:if>
+
+        <!-- Para colocar as expiradas no começo-->
+        <script>
+            window.addEventListener('DOMContentLoaded', function() {
+                var table = document.querySelector('table');
+                var tbody = table.querySelector('tbody');
+                var rows = Array.from(tbody.querySelectorAll('tr'));
+        
+                // Filtra as linhas pela classe .locacaoExpirada
+                var locacoesExpiradas = rows.filter(function(row) {
+                    return row.classList.contains('locacaoExpirada');
+                });
+        
+                // Remove as linhas de locações expiradas da tabela
+                locacoesExpiradas.forEach(function(row) {
+                    tbody.removeChild(row);
+                });
+        
+                // Insere as linhas de locações expiradas abaixo do cabeçalho da tabela
+                var firstRow = tbody.querySelector('tr');
+                locacoesExpiradas.forEach(function(row) {
+                    tbody.insertBefore(row, firstRow.nextSibling);
+                });
+            });
+        </script>
     </body>
 </fmt:bundle>
 </html>
