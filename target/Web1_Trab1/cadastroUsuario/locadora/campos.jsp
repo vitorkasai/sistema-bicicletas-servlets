@@ -6,42 +6,44 @@
 
 <% System.out.println("PASSEI POR: cadastroUsuario/locadora/campos.jsp"); %> 
 
+<fmt:bundle basename="messages">
 <table border="1">
 	<caption>
-   		Cadastro
+		<fmt:message key="cadastro" />
 	</caption>
    	<tr>
-   		<td><label for="email">Email</label></td>
+   		<td><label for="email"><fmt:message key="email" /></label></td>
    		<td>
 			<input type="email" id="email" name="email" size="45"
    			required maxlength="256"/>
 			<c:if test="${mensagemErro == 'O email já está em uso.'}">
-				<div class="error-message">${mensagemErro}</div>
+				<div class="error-message"><fmt:message key="erro_email" />
+				</div>
 			</c:if>
 		</td>
    	</tr>
    	<tr>
-   		<td><label for="senha">Senha</label></td>
+   		<td><label for="senha"><fmt:message key="senha" /></label></td>
    		<td><input type="password" id="senha" name="senha" size="45" required maxlength="256" /></td>
    	</tr>
 	<tr>
-		<td><label for="nome">Nome</label></td>
+		<td><label for="nome"><fmt:message key="nome" /></label></td>
 		<td><input type="text" id="nome" name="nome" size="45" required maxlength="256" /></td>
 	</tr>
 	<tr>
-		<td><label for="cnpj">CNPJ</label></td>
+		<td><label for="cnpj"><fmt:message key="CNPJ" /></label></td>
 		<td>
 			<input type="text" id="cnpj" name="cnpj" size="45" required maxlength="14" />
 			<c:if test="${mensagemErro == 'O CNPJ já está em uso.'}">
-				<div class="error-message">${mensagemErro}</div>
+				<div class="error-message"><fmt:message key="erro_CNPJ" /></div>
 			</c:if>
 		</td>
 	</tr>
 	<tr>
-		<td><label for="cidade">Cidade</label></td>
+		<td><label for="cidade"><fmt:message key="cidade" /></label></td>
 		<td>
             <select id="cidade" name="cidade" required>
-                <option value="" selected disabled>Selecione uma cidade</option>
+                <option value="" selected disabled><fmt:message key="selecionar_cidade" /></option>
             </select>
 	
 		</td>
@@ -69,8 +71,7 @@
 		}
 	</script>
    	<tr>
-		<!-- Substituir value depois por <fmt:message key="save" /> / -->
-   		<td colspan="2" align="center"><input type="submit" value="Cadastrar"></td>
+   		<td colspan="2" align="center"><input type="submit" value=<fmt:message key="cadastrar" />></td>
    	</tr>
 </table>
-
+</fmt:bundle>

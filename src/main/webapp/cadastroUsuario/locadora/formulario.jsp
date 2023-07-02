@@ -4,8 +4,9 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <html>
+<fmt:bundle basename="messages">
 <head>
-		<title>Cadastro Locadora</title>
+		<title><fmt:message key="cadastro_locadora" /></title>
 		<style>
 			body {
 				background-color: #282a36;
@@ -101,7 +102,7 @@
 <body>
 	<% System.out.println("PASSEI POR: cadastroUsuario/locadora/formulario.jsp"); %> 
 	<div align="center">
-		<h1>Cadastro Locadora</h1>
+		<h1><fmt:message key="cadastro_locadora" /></h1>
 	</div>
 	<div align="center">
 		<form action="${pageContext.request.contextPath}/registrar-locadora/insercao" method="post">
@@ -116,4 +117,5 @@
 		</ul>
 	</c:if>
 </body>
+</fmt:bundle>
 </html>

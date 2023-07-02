@@ -6,14 +6,15 @@
 
 <% System.out.println("PASSEI POR: WEB-INF/locadora/campos.jsp"); %> 
 
+<fmt:bundle basename="messages">
 <table border="1">
 	<caption>
    		<c:choose>
    			<c:when test="${locadora != null}">
-				Edição
+				<fmt:message key="edicao" />
             </c:when>
    			<c:otherwise>
-				Cadastro
+				<fmt:message key="cadastro" />
             </c:otherwise>
    		</c:choose>
 	</caption>
@@ -21,37 +22,37 @@
    		<input type="hidden" name="id" value="${locadora.id}" />
    	</c:if>
    	<tr>
-   		<td><label for="email">Email</label></td>
+   		<td><label for="email"><fmt:message key="email" /></label></td>
    		<td>
 			<input type="email" id="email" name="email" size="45"
    			required value="${locadora.email}" maxlength="256"/>
 			<c:if test="${mensagemErro == 'O email já está em uso.'}">
-				<div class="error-message">${mensagemErro}</div>
+				<div class="error-message"><fmt:message key="erro_email" /></div>
 			</c:if>
 		</td>
    	</tr>
    	<tr>
-   		<td><label for="senha">Senha</label></td>
+   		<td><label for="senha"><fmt:message key="senha" /></label></td>
    		<td><input type="text" id="senha" name="senha" size="45" required
    			value="${locadora.senha}" maxlength="256" /></td>
    	</tr>
 	<tr>
-		<td><label for="nome">Nome</label></td>
+		<td><label for="nome"><fmt:message key="nome" /></label></td>
 		<td><input type="text" id="nome" name="nome" size="45" required
 			value="${locadora.nome}" maxlength="256" /></td>
 	</tr>
 	<tr>
-		<td><label for="cnpj">CNPJ</label></td>
+		<td><label for="cnpj"><fmt:message key="CNPJ" /></label></td>
 		<td>
 			<input type="text" id="cnpj" name="cnpj" size="45" required
 			value="${locadora.CNPJ}" maxlength="14" />
 			<c:if test="${mensagemErro == 'O CNPJ já está em uso.'}">
-				<div class="error-message">${mensagemErro}</div>
+				<div class="error-message"><fmt:message key="erro_CNPJ" /></div>
 			</c:if>
 		</td>
 	</tr>
 	<tr>
-		<td><label for="cidade">Cidade</label></td>
+		<td><label for="cidade"><fmt:message key="cidade" /></label></td>
 		<td>
 			<c:choose>
 				<c:when test="${locadora.cidade != null}">
@@ -60,7 +61,7 @@
 				</c:when>
 				<c:otherwise>
 					<select id="cidade" name="cidade" required>
-						<option value="" selected disabled>Selecione uma cidade</option>
+						<option value="" selected disabled><fmt:message key="selecionar_cidade" /></option>
 					</select>
 				</c:otherwise>
 			</c:choose>
@@ -72,11 +73,11 @@
 			<c:choose>
 				<c:when test="${locadora.administrador == '1'}">
 					<input type="checkbox" name="administrador" id="administrador" value="1" checked>
-					<label for="administrador">Administrador</label>
+					<label for="administrador"><fmt:message key="adm" /></label>
 				</c:when>
 				<c:otherwise>
 					<input type="checkbox" name="administrador" id="administrador" value="1">
-					<label for="administrador">Administrador</label>
+					<label for="administrador"><fmt:message key="adm" /></label>
 				</c:otherwise>
 			</c:choose>		
 		</td>
@@ -124,8 +125,7 @@
 		}
 	</script>
    	<tr>
-		<!-- Substituir value depois por <fmt:message key="save" /> / -->
-   		<td colspan="2" align="center"><input type="submit" value="Salvar"></td>
+   		<td colspan="2" align="center"><input type="submit" value=<fmt:message key="salvar" />></td>
    	</tr>
 </table>
-
+</fmt:bundle>

@@ -1,12 +1,15 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page isELIgnored="false"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+
 
 <!DOCTYPE html>
 <html>
+    <fmt:bundle basename="messages">
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Menu do Sistema</title>
+        <title><fmt:message key="menu_sistema" /></title>
         <style>
             body {
                 background-color: #282a36;
@@ -73,22 +76,22 @@
     </head>
     <body>
         <% System.out.println("PASSEI POR: WEB-INF/logado/usuario/index.jsp"); %>
-        <h1>Página do Usuário</h1>
-        <p>Olá ${sessionScope.usuarioLogado.nome}</p>
+        <h1><fmt:message key="pagina_usuario" /></h1>
+        <p><fmt:message key="ola" /> ${sessionScope.usuarioLogado.nome}</p>
         <c:if test="${sessionScope.usuarioLogado.tipoUsuario == 'C'}">
-            <h1>Você está logado como Cliente</h1>
+            <h1><fmt:message key="logado_cliente" /></h1>
             <div class="links">
-                <a href="${pageContext.request.contextPath}/locacoes/cadastro">Cadastrar locação</a>
-                <a href="${pageContext.request.contextPath}/logout.jsp">Sair</a>
+                <a href="${pageContext.request.contextPath}/locacoes/cadastro"><fmt:message key="cadastrar_locacao" /></a>
+                <a href="${pageContext.request.contextPath}/logout.jsp"><fmt:message key="sair" /></a>
             </div>
-            <h2>Lista de locações</h2>
+            <h2><fmt:message key="lista_locacoes" /></h2>
             <div id="locacoesTableContainer" align="center">
                 <table id="locacoesTable" border="1">
                     <tr>
-                        <th>Nome da locadora</th>
-                        <th>Cidade</th>
-                        <th>Data</th>
-                        <th>Horario</th>
+                        <th><fmt:message key="nome" /></th>
+                        <th><fmt:message key="cidade" /></th>
+                        <th><fmt:message key="data" /></th>
+                        <th><fmt:message key="horario" /></th>
                     </tr>
                     <!-- Tabela com as locações do cliente logado -->
                     <c:forEach var="locacao" items="${sessionScope.listaLocacoes}">
@@ -105,24 +108,24 @@
             </div>
         </c:if>  
         <c:if test="${sessionScope.usuarioLogado.tipoUsuario == 'L'}">
-            <h1>Você está logado como Locadora</h1>
-            <a href="${pageContext.request.contextPath}/logout.jsp">Sair</a>
-            <h2>Lista de locações</h2>
+            <h1><fmt:message key="logado_locadora" /></h1>
+            <a href="${pageContext.request.contextPath}/logout.jsp"><fmt:message key="sair" /></a>
+            <h2><fmt:message key="lista_locacoes" /></h2>
             <div id="locacoesTableContainer" align="center">
               
                 <table id="locacoesTable" border="1">
                     <tr>
-                        <th>Nome do cliente</th>
-                        <th>Cidade</th>
-                        <th>Data</th>
-                        <th>Horario</th>
+                        <th><fmt:message key="nome_cliente" /></th>
+                        <th><fmt:message key="CPF_cliente" /></th>
+                        <th><fmt:message key="data" /></th>
+                        <th><fmt:message key="horario" /></th>
                     </tr>
                     <!-- Tabela com as locações da locadora logada -->
                     <c:forEach var="locacao" items="${sessionScope.listaLocacoes}">
                         <c:if test="${locacao.locadora.email == sessionScope.usuarioLogado.email}">
                             <tr>
-                                <td>${locacao.locadora.nome}</td>
-                                <td>${locacao.locadora.cidade}</td>
+                                <td>${locacao.cliente.nome}</td>
+                                <td>${locacao.cliente.CPF}</td>
                                 <td>${locacao.dia}</td>
                                 <td>${locacao.horario}</td> 
                             </tr>
@@ -132,4 +135,5 @@
             </div> 
         </c:if>
     </body>
+</fmt:bundle>
 </html>

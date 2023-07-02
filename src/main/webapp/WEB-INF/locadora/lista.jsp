@@ -4,8 +4,9 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <html>
+	<fmt:bundle basename="messages">
 <head>
-		<title>Gerenciamento de Locadoras</title>
+		<title><fmt:message key="gerenciamento_locadoras" /></title>
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 		<link rel="stylesheet" type="text/css" href="<c:url value="/styles.css" />">
 
@@ -33,30 +34,30 @@
 </head>
 <body>
 	<% System.out.println("PASSEI POR: WEB-INF/locadora/lista.jsp"); %> 
-	<input type="hidden" id="removalConfirmMessage" value="<fmt:message key='removal_confirm' />">
+	<input type="hidden" id="removalConfirmMessage" value="<fmt:message key='confirmar_remocao' />">
 	<%
 		String contextPath = request.getContextPath().replace("/", "");
 	%>
 	<div align="center">
-		<h1>Gerenciamento de Locadoras</h1>
+		<h1><fmt:message key="gerenciamento_locadoras" /></h1>
 		<h2>
-			<a href="/<%=contextPath%>">Menu Principal</a> &nbsp;&nbsp;&nbsp; <a
-				href="/<%=contextPath%>/locadoras/cadastro">Adicionar locadora</a>
+			<a href="/<%=contextPath%>"><fmt:message key="menu_principal" /></a> &nbsp;&nbsp;&nbsp; <a
+				href="/<%=contextPath%>/locadoras/cadastro"><fmt:message key="adicionar_locadora" /></a>
 		</h2>
 	</div>
 
 	<div align="center">
 		<table border="1">
-			<caption>Lista de Locadoras</caption>
+			<caption><fmt:message key="lista_locadoras" /></caption>
 			<tr>
-				<th>ID</th>
-				<th>Email</th>
-				<th>Senha</th>
-				<th>Nome</th>
-				<th>CNPJ</th>
-				<th>Cidade</th>
-				<th>Administrador</th>
-				<th>Ações</th>
+				<th><fmt:message key="ID" /></th>
+				<th><fmt:message key="email" /></th>
+				<th><fmt:message key="senha" /></th>
+				<th><fmt:message key="nome" /></th>
+				<th><fmt:message key="CNPJ" /></th>
+				<th><fmt:message key="cidade" /></th>
+				<th><fmt:message key="adm" /></th>
+				<th><fmt:message key="acoes" /></th>
 			</tr>
 			<c:forEach var="locadora" items="${sessionScope.listaLocadoras}">
 				<tr>
@@ -83,4 +84,5 @@
 		</table>
 	</div>
 </body>
+</fmt:bundle>
 </html>

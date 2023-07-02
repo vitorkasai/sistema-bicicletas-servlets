@@ -4,8 +4,10 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <html>
+
+<fmt:bundle basename="messages">
 <head>
-		<title>Gerenciamento de clientes</title>
+		<title><fmt:message key="gerenciamento_clientes" /></title>
 		<style>
 		/* Cor de fundo para a página */
 		body {
@@ -128,9 +130,9 @@
 <body>
 	<% System.out.println("PASSEI POR: WEB-INF/cliente/formulario.jsp"); %> 
 	<div align="center">
-		<h1>Gerenciamento de clientes</h1>
+		<h1><fmt:message key="gerenciamento_clientes" /></h1>
 		<h2>
-			<a href="lista">Lista de Clientes</a>
+			<a href="lista"><fmt:message key="lista_clientes" /></a>
 		</h2>
 	</div>
 	<div align="center">
@@ -155,4 +157,5 @@
 		</ul>
 	</c:if>
 </body>
+</fmt:bundle>
 </html>

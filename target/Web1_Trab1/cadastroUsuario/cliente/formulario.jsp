@@ -105,9 +105,11 @@
 </head>
 
 <body>
+	<fmt:bundle basename="messages">
 	<% System.out.println("PASSEI POR: cadastroUsuario/cliente/formulario.jsp"); %> 
 	<div align="center">
-		<h1>Cadastro cliente</h1>
+		<h1><fmt:message key="cadastro_cliente" />
+		</h1>
 	</div>
 	<div align="center">
 		<form action="${pageContext.request.contextPath}/registrar-cliente/insercao" method="post">
@@ -121,5 +123,6 @@
 			</c:forEach>
 		</ul>
 	</c:if>
+	</fmt:bundle>
 </body>
 </html>

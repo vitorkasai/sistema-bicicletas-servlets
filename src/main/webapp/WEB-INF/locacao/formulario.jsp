@@ -6,8 +6,9 @@
 
 
 <html>
+    <fmt:bundle basename="messages">
     <head>
-        <title>Gerenciamento de locações de um cliente</title>
+        <title><fmt:message key="gerenciamento_locacoes" /></title>
         
         <style>
             body {
@@ -118,21 +119,21 @@
     <body>
         <% System.out.println("PASSEI POR: WEB-INF/locacao/formulario.jsp"); %> 
         <div align="center">
-            <h1>Nova locação</h1>
+            <h1><fmt:message key="nova_locacao" /></h1>
             <h2>
-                <a href="lista">Minha lista de Locações</a>
+                <a href="lista"><fmt:message key="minha_lista_locacoes" /></a>
             </h2>
         </div>
         <div align="center">
             <form action="insercao" method="post" id="formulario">
                 <table border="1">
-                    <caption>Cadastro</caption>
+                    <caption><fmt:message key="cadastro" /></caption>
                     <tr>
-                        <td><label for="locadora">Locadora:</label></td>
+                        <td><label for="locadora"><fmt:message key="locadora" /></label></td>
                         <td>
                             <c:set var="listaLocadoras" value="${sessionScope.listaLocadoras}" />
                             <select id="locadoraSelect" name="locadoraId" required>
-                                <option value="" selected disabled>Selecione uma locadora</option>
+                                <option value="" selected disabled><fmt:message key="selecionar_locadora" /></option>
                                 <c:forEach items="${listaLocadoras}" var="locadora">
                                     <option value="${locadora.id}">${locadora.nome}</option>
                                 </c:forEach>
@@ -140,19 +141,19 @@
                         </td>
                     </tr>
                     <tr>
-                        <td><label for="dataLocacao">Data</label></td>
+                        <td><label for="dataLocacao"><fmt:message key="data" /></label></td>
                         <td><input type="date" id="dataLocacao" name="dataLocacao" required value="${locacao.dia}" /></td>
                     </tr>
                     
                     <tr>
                         <c:choose>
                             <c:when test="${erroLocacao != 'Horário indisponível'}">
-                                <td><label for="hora">Hora</label></td>
+                                <td><label for="hora"><fmt:message key="horario" /></label></td>
                                 <td><input type="time" id="horario" name="horario" step="3600" required /></td>
                                 <c:set var="erroLocacao" value="" scope="request" />
                             </c:when>
                             <c:otherwise>
-                                <td><label for="hora">Hora</label></td>
+                                <td><label for="hora"><fmt:message key="horario" /></label></td>
                                 <td><input type="time" id="horario" class="horarioUsado" name="horario" step="3600" required /></td>
                             </c:otherwise>
                         </c:choose>
@@ -162,7 +163,7 @@
                     
                     <tr>
                         <!-- Substituir o value depois por <fmt:message key="save" /> /> -->
-                        <td colspan="2" align="center"><input type="submit" value="Enviar"></td>
+                        <td colspan="2" align="center"><input type="submit" value=<fmt:message key="cadastrar" />></td>
                     </tr>
                 </table>
             </form>
@@ -201,4 +202,5 @@
         </script>
         
     </body>
+    </fmt:bundle>
 </html>
