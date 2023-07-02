@@ -18,24 +18,23 @@
 <% System.out.println("PASSEI POR: login.jsp"); %>
 <h1><fmt:message key="boas_vindas" /></h1>
 
-<c:if test="${mensagens.existeErros}">
-    <div id="erro">
-        <ul>
-            <c:forEach var="erro" items="${mensagens.erros}">
-                <li> ${erro} </li>
-            </c:forEach>
-        </ul>
-    </div>
-</c:if>
+
 
 <div class="login-container">
     <i class="fas fa-user fa-3x"></i>
     <h2><fmt:message key="entrar" /></h2>
+    <c:if test="${mensagens.existeErros}">
+        <ul id="erro">
+            <c:forEach var="erro" items="${mensagens.erros}">
+                <li><fmt:message key="${erro}" /></li>
+            </c:forEach>
+        </ul>
+    </c:if>
     <form class="login-form" method="post" action="index.jsp">
         <label for="login"></label>
-        <input type="text" name="login" id="login" value="${param.login}" placeholder="<fmt:message key='email' />"/>
+        <input type="text" name="login" id="login" value="${param.login}" required placeholder="<fmt:message key='email' />"/>
         <label for="senha"></label>
-        <input type="password" name="senha" id="senha" placeholder="<fmt:message key='senha' />"/>
+        <input type="password" name="senha" id="senha" required placeholder="<fmt:message key='senha' />"/>
         <input type="submit" name="bOK" id="logar" value=<fmt:message key="login" /> />
     </form>
     <div id="linksCadastroContainer">

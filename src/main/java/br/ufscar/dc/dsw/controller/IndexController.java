@@ -34,32 +34,24 @@ public class IndexController extends HttpServlet {
 		if (request.getParameter("bOK") != null) {
 			String login = request.getParameter("login");
 			String senha = request.getParameter("senha");
-			if (login == null || login.isEmpty()) {
-				erros.add("Login não informado!");
-			}
-			if (senha == null || senha.isEmpty()) {
-				erros.add("Senha não informada!");
-			}
-			if (!erros.isExisteErros()) {
-				UsuarioDAO dao = new UsuarioDAO();
-				Usuario usuario = dao.get(login);
-				if (usuario != null) {
-					if (usuario.getSenha().equals(senha)) {
-						request.getSession().setAttribute("usuarioLogado", usuario);
-						if (usuario.getAdministrador().equals("1")) {
-							response.sendRedirect("admin/");
-						} else {
-							response.sendRedirect("usuario/");
-						}
-						return;
+			UsuarioDAO dao = new UsuarioDAO();
+			Usuario usuario = dao.get(login);
+			if (usuario != null) {
+				if (usuario.getSenha().equals(senha)) {
+					request.getSession().setAttribute("usuarioLogado", usuario);
+					if (usuario.getAdministrador().equals("1")) {
+						response.sendRedirect("admin/");
 					} else {
-						erros.add("Senha inválida!");
+						response.sendRedirect("usuario/");
 					}
+					return;
 				} else {
-					erros.add("Usuário não encontrado!");
+					erros.add("senha_invalida");
 				}
+			} else {
+				erros.add("usuario_nao_encontrado");
 			}
-		}	
+		}
 		request.getSession().invalidate();
 
 		List<Locadora> listaLocadoras = new LocadoraDAO().getAll();
