@@ -178,27 +178,49 @@
         </c:if>
 
         <script>
-            // Armazena os valores dos campos em variáveis
-            var locadoraSelectValue = document.getElementById('locadoraSelect').value;
-            var dataLocacaoValue = document.getElementById('dataLocacao').value;
-            var horarioValue = document.getElementById('horario').value;
-          // Verifica se eu já escolhi uma locadora para retirar a opção inválida  
-          document.getElementById('locadoraSelect').addEventListener('change', function() {
-            var locadoraSelect = document.getElementById('locadoraSelect');
-            
-            // Remover a opção "Escolha uma locadora" quando uma opção válida for selecionada
-            if (locadoraSelect.value !== '') {
-              var escolhaOption = document.querySelector('#locadoraSelect option[value=""]');
-              escolhaOption.style.display = 'none';
-            }
-          });
-            // Recoloca os valores nos campos do formulário após submissão mal sucedida
             document.addEventListener('DOMContentLoaded', function() {
+                // Armazena os valores dos campos em variáveis
+                var locadoraSelectValue = document.getElementById('locadoraSelect').value;
+                var dataLocacaoValue = document.getElementById('dataLocacao').value;
+                var horarioValue = document.getElementById('horario').value;
+              
+                // Verifica se eu já escolhi uma locadora para retirar a opção inválida  
+                document.getElementById('locadoraSelect').addEventListener('change', function() {
+                  var locadoraSelect = document.getElementById('locadoraSelect');
+              
+                  // Remover a opção "Escolha uma locadora" quando uma opção válida for selecionada
+                  if (locadoraSelect.value !== '') {
+                    var escolhaOption = document.querySelector('#locadoraSelect option[value=""]');
+                    escolhaOption.style.display = 'none';
+                  }
+                });
+              
+                // Recoloca os valores nos campos do formulário após submissão mal sucedida
                 document.getElementById('locadoraSelect').value = locadoraSelectValue;
                 document.getElementById('dataLocacao').value = dataLocacaoValue;
                 document.getElementById('horario').value = horarioValue;
-            });
-
+              
+                // Obter o elemento de data
+                const dataInput = document.getElementById('dataLocacao');
+              
+                // Obter o elemento de hora
+                const horaInput = document.getElementById('horario');
+              
+                // Definir a data mínima do input de data
+                dataInput.min = new Date().toISOString().split('T')[0];
+                // Atualizar os valores permitidos do input de hora ao alterar a data
+                dataInput.addEventListener('change', () => {
+                  const dataSelecionada = new Date(dataInput.value).toISOString().split('T')[0];
+                  console.log(dataSelecionada);
+              
+                  if (dataSelecionada == dataInput.min) {
+                    const horaAtual = new Date().getHours();
+                    horaInput.min = (horaAtual + 1).toString().padStart(2, '0') + ':00';
+                  } else {
+                    horaInput.min = '00:00';
+                  }
+                });
+              });
         </script>
         
     </body>
