@@ -10,6 +10,36 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title><fmt:message key="autenticacao" /></title>
+
+        <style>
+            body {
+                font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+                background-color: #282a36;
+                color: #f8f8f2;
+                margin: 0;
+                padding: 20px;
+            }
+
+            h1 {
+                color: #bd93f9;
+                text-align: center;
+            }
+
+            #erro {
+                background-color: #ff5555;
+                border: 1px solid #ff5555;
+                color: #f8f8f2;
+                margin: 10px auto;
+                padding: 10px;
+                padding-inline-start: 0px;
+                list-style-type: none;
+            }
+
+            #erro li {
+                margin-bottom: 5px;
+            }
+        </style>
+
     </head>
     <body>
         <% System.out.println("PASSEI POR: noAuth.jsp"); %>
