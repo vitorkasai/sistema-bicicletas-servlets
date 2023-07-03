@@ -32,7 +32,7 @@
     </c:if>
     <form class="login-form" method="post" action="index.jsp">
         <label for="login"></label>
-        <input type="text" name="login" id="login" value="${param.login}" required placeholder="<fmt:message key='email' />"/>
+        <input type="email" name="login" id="login" value="${param.login}" required placeholder="<fmt:message key='email' />"/>
         <label for="senha"></label>
         <input type="password" name="senha" id="senha" required placeholder="<fmt:message key='senha' />"/>
         <input type="submit" name="bOK" id="logar" value=<fmt:message key="login" /> />
