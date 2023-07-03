@@ -33,10 +33,14 @@
                 padding: 10px;
                 padding-inline-start: 0px;
                 list-style-type: none;
+                display: flex;
+                text-align: center;
+                justify-content: center;
             }
 
             #erro li {
                 margin-bottom: 5px;
+                text-align: center;
             }
         </style>
 
@@ -45,13 +49,11 @@
         <% System.out.println("PASSEI POR: noAuth.jsp"); %>
         <h1><fmt:message key="autenticacao" /></h1>
         <c:if test="${mensagens.existeErros}">
-            <div id="erro">
-                <ul>
-                    <c:forEach var="erro" items="${mensagens.erros}">
-                        <li> ${erro} </li>
-                        </c:forEach>
-                </ul>
-            </div>
+            <ul id="erro">
+                <c:forEach var="erro" items="${mensagens.erros}">
+                    <li><fmt:message key="${erro}" /></li>
+                </c:forEach>
+            </ul>
         </c:if>
     </body>
 </fmt:bundle>
