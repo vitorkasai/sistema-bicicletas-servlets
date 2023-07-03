@@ -5,6 +5,8 @@ Atividade avaliativa 1 referente ao projeto da disciplina Desenvolvimento de Sof
 
 Este projeto foi desenvolvido como parte da disciplina Desenvolvimento de Software para Web 1, ministrada pelo professor Alan Demetrius. O objetivo principal do projeto é criar uma aplicação web para um Sistema de Locação de Bicicletas. O documento de requisitos está presente no repositório.
 
+![Tela de login](imagens/tela.png)
+
 ## Resumo do Trabalho
 
 ### Tecnologias Utilizadas
